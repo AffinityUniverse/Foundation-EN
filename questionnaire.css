@@ -7,55 +7,89 @@
     --animation-easing: cubic-bezier(0.22, 0.72, 0.18, 1);
 }
 
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+/* ========================================
+   공통 기본 설정
+======================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
 
 body {
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
+
     min-height: 100vh;
     margin: 0;
     padding: 30px 0 150px;
+
     overflow-x: hidden;
+
     background-color: var(--page-blue);
 }
 
 @font-face {
     font-family: "Ownglyph_meetme-Rg";
-    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_1@1.0/Ownglyph_meetme-Rg.woff2") format("woff2");
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_1@1.0/Ownglyph_meetme-Rg.woff2")
+        format("woff2");
     font-weight: normal;
     font-style: normal;
 }
+
+/* ========================================
+   공통 타이틀
+======================================== */
 
 .title {
     max-width: 1200px;
     margin: 40px auto 20px;
     padding: 0 130px;
-    color: #fff;
+
+    color: #FFFFFF;
+
     font-family: "Ownglyph_meetme-Rg", sans-serif;
     font-size: clamp(50px, 6vw, 80px);
     line-height: 1.15;
     text-align: center;
 }
 
-.title span { color: var(--point-yellow); }
+.title span {
+    color: var(--point-yellow);
+}
+
+/* ========================================
+   공통 카드
+======================================== */
 
 .card-list {
     display: flex;
     flex-direction: column;
     align-items: center;
+
     width: 100%;
 }
 
 .group {
     position: relative;
+
     width: var(--card-size);
+
     scroll-margin-top: 60px;
+
     transform: translateX(0);
     transform-origin: center;
-    transition: transform var(--animation-duration) var(--animation-easing);
+
+    transition:
+        transform
+        var(--animation-duration)
+        var(--animation-easing);
+
     will-change: transform;
 }
 
@@ -65,36 +99,52 @@ body {
 
 .card-stage {
     position: relative;
+
     width: var(--card-size);
     height: var(--card-size);
+
     margin: 100px 0;
+
     border: 0;
     border-radius: var(--card-radius);
+
     background-color: #103D88;
+
     perspective: 1800px;
     perspective-origin: left center;
+
     overflow: visible;
+
     cursor: pointer;
     outline: none;
+
     transform-style: preserve-3d;
     -webkit-transform-style: preserve-3d;
+
     box-shadow: 0 20px 45px rgba(0, 24, 84, 0.18);
 }
 
 .card-stage:focus-visible {
-    box-shadow: 0 0 0 5px var(--point-yellow), 0 20px 45px rgba(0, 24, 84, 0.22);
+    box-shadow:
+        0 0 0 5px var(--point-yellow),
+        0 20px 45px rgba(0, 24, 84, 0.22);
 }
 
 .korean-card {
     position: absolute;
     inset: 0;
     z-index: 1;
+
     display: block;
+
     width: 100%;
     height: 100%;
+
     border-radius: var(--card-radius);
+
     object-fit: cover;
     object-position: center;
+
     pointer-events: none;
     user-select: none;
     -webkit-user-drag: none;
@@ -104,85 +154,130 @@ body {
     position: absolute;
     inset: 0;
     z-index: 2;
+
     width: 100%;
     height: 100%;
+
     border-radius: var(--card-radius);
+
+    transform:
+        rotateY(0deg)
+        translateZ(1px);
     transform-origin: left center;
-    transform: rotateY(0deg) translateZ(1px);
     transform-style: preserve-3d;
     -webkit-transform-style: preserve-3d;
+
     transition:
-        transform var(--animation-duration) var(--animation-easing),
-        box-shadow var(--animation-duration) var(--animation-easing);
+        transform
+        var(--animation-duration)
+        var(--animation-easing),
+        box-shadow
+        var(--animation-duration)
+        var(--animation-easing);
+
     will-change: transform;
+
     pointer-events: none;
 }
 
 .door-face {
     position: absolute;
     inset: 0;
+
     width: 100%;
     height: 100%;
+
     border-radius: var(--card-radius);
+
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
+
     pointer-events: none;
 }
 
 .door-front {
     z-index: 2;
-    transform: rotateY(0deg) translateZ(0.6px);
+
+    transform:
+        rotateY(0deg)
+        translateZ(0.6px);
 }
 
 .door-back {
     z-index: 1;
-    transform: rotateY(180deg) translateZ(0.6px);
+
+    transform:
+        rotateY(180deg)
+        translateZ(0.6px);
 }
 
 .group.open .english-door {
-    transform: rotateY(-180deg) translateZ(1px);
+    transform:
+        rotateY(-180deg)
+        translateZ(1px);
+
     box-shadow: -18px 18px 30px rgba(0, 22, 85, 0.2);
 }
+
+/* ========================================
+   공통 세로 네비게이터
+======================================== */
 
 .mini-toc {
     position: fixed;
     top: 50%;
     right: 24px;
     z-index: 1000;
+
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+
     width: 82px;
     max-height: calc(100vh - 24px);
+
+    gap: 12px;
     padding: 15px 10px;
+
     overflow-y: auto;
-    transform: translateY(-50%);
+
     border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 23px;
+
     background-color: rgba(5, 43, 113, 0.88);
+
     box-shadow: 0 15px 35px rgba(0, 20, 70, 0.3);
+
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
+
+    transform: translateY(-50%);
+
     scrollbar-width: none;
 }
 
-.mini-toc::-webkit-scrollbar { display: none; }
+.mini-toc::-webkit-scrollbar {
+    display: none;
+}
 
 .toc-group {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 7px;
+
     width: 100%;
+    gap: 7px;
 }
 
 .toc-title {
     margin-bottom: 3px;
+
     color: rgba(255, 255, 255, 0.62);
+
     font-family: Arial, sans-serif;
     font-size: 9px;
     font-weight: 800;
@@ -193,17 +288,23 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+
     width: 44px;
     height: 35px;
+
     flex-shrink: 0;
+
     border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 11px;
-    color: #fff;
+
+    color: #FFFFFF;
     background-color: rgba(255, 255, 255, 0.08);
+
     font-family: Arial, sans-serif;
     font-size: 13px;
     font-weight: 800;
     text-decoration: none;
+
     transition:
         color 0.25s ease,
         background-color 0.25s ease,
@@ -213,8 +314,9 @@ body {
 
 .mini-toc a:hover {
     color: var(--page-blue);
-    background-color: #fff;
-    border-color: #fff;
+    background-color: #FFFFFF;
+    border-color: #FFFFFF;
+
     transform: scale(1.08);
 }
 
@@ -222,31 +324,46 @@ body {
     color: var(--page-blue);
     background-color: var(--point-yellow);
     border-color: var(--point-yellow);
+
     transform: scale(1.08);
 }
 
 .toc-divider {
     width: 40px;
     height: 1px;
+
     flex-shrink: 0;
+
     background-color: rgba(255, 255, 255, 0.23);
 }
 
+/* ========================================
+   공통 반응형
+======================================== */
+
 @media (max-width: 1100px) {
-    :root { --card-size: min(43vw, 500px); }
+    :root {
+        --card-size: min(43vw, 500px);
+    }
 
     .title {
         padding: 0 100px 0 25px;
         font-size: clamp(48px, 7vw, 65px);
     }
 
-    .mini-toc { right: 10px; }
+    .mini-toc {
+        right: 10px;
+    }
 }
 
 @media (max-width: 700px) {
-    :root { --card-size: min(70vw, 500px); }
+    :root {
+        --card-size: min(70vw, 500px);
+    }
 
-    body { padding-top: 10px; }
+    body {
+        padding-top: 10px;
+    }
 
     .title {
         margin-top: 25px;
@@ -254,33 +371,356 @@ body {
         font-size: 42px;
     }
 
-    .card-stage { margin: 70px 0; }
+    .card-stage {
+        margin: 70px 0;
+    }
 
     .group.open {
-        transform: translateX(calc(var(--card-size) / 2)) scale(0.88);
+        transform:
+            translateX(calc(var(--card-size) / 2))
+            scale(0.88);
     }
 
     .mini-toc {
         right: 5px;
+
         width: 56px;
         padding: 10px 6px;
+
         border-radius: 16px;
     }
 
-    .toc-title { font-size: 7px; }
+    .toc-title {
+        font-size: 7px;
+    }
 
     .mini-toc a {
         width: 34px;
         height: 28px;
+
         border-radius: 8px;
+
         font-size: 11px;
     }
 
-    .toc-divider { width: 29px; }
+    .toc-divider {
+        width: 29px;
+    }
 }
 
+/* ========================================
+   단일 플래시카드 페이지
+   <body class="flashcard-page"> 전용
+======================================== */
+
+body.flashcard-page {
+    position: relative;
+    display: block;
+
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+
+    overflow: hidden;
+}
+
+/* 카드 위 중앙 타이틀 */
+.flashcard-page .title {
+    position: absolute;
+    top: calc(50% - (var(--card-size) / 2) - 145px);
+    left: 50%;
+    z-index: 20;
+
+    width: max-content;
+    max-width: calc(100% - 32px);
+
+    margin: 0;
+    padding: 0;
+
+    font-size: clamp(42px, 5.4vw, 72px);
+    text-align: center;
+    white-space: nowrap;
+
+    transform: translateX(-50%);
+}
+
+/* 플래시카드 작업 영역 */
+.flashcard-page .flashcard-workspace {
+    position: relative;
+    display: block;
+
+    width: 100%;
+    min-height: 100vh;
+
+    padding: 0;
+}
+
+/* 닫힌 카드를 화면 정중앙에 배치 */
+.flashcard-page .card-list {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    display: block;
+
+    width: var(--card-size);
+    margin: 0;
+
+    transform: translate(-50%, -50%);
+}
+
+.flashcard-page .group {
+    flex: 0 0 auto;
+}
+
+.flashcard-page .card-stage {
+    margin: 0;
+}
+
+/* 키보드 이동 후 노란 포커스 테두리 제거 */
+.flashcard-page .card-stage:focus,
+.flashcard-page .card-stage:focus-visible {
+    outline: none;
+
+    box-shadow: 0 20px 45px rgba(0, 24, 84, 0.18);
+}
+
+/* 카드 하단 네비게이터 영역 */
+.flashcard-page .card-navigation {
+    position: absolute;
+    top: calc(50% + (var(--card-size) / 2) + 80px);
+    left: 50%;
+
+    display: block;
+
+    width: max-content;
+    max-width: calc(100% - 32px);
+
+    margin: 0;
+
+    transform: translateX(-50%);
+}
+
+/* 플래시카드 가로 네비게이터 */
+.flashcard-page .mini-toc.horizontal-toc {
+    position: static;
+    top: auto;
+    right: auto;
+    z-index: 10;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    width: max-content;
+    max-width: 100%;
+    min-height: 0;
+    max-height: none;
+
+    gap: 8px;
+    margin: 0 auto;
+    padding: 8px 10px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    border-radius: 16px;
+
+    transform: none;
+
+    scrollbar-width: none;
+}
+
+.flashcard-page .mini-toc.horizontal-toc::-webkit-scrollbar {
+    display: none;
+}
+
+.flashcard-page .horizontal-toc .toc-group {
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    width: auto;
+    gap: 6px;
+}
+
+.flashcard-page .horizontal-toc .toc-title {
+    margin: 0 2px 0 0;
+
+    writing-mode: horizontal-tb;
+    white-space: nowrap;
+}
+
+.flashcard-page .horizontal-toc .toc-divider {
+    width: 1px;
+    height: 32px;
+
+    flex: 0 0 auto;
+}
+
+.flashcard-page .horizontal-toc a {
+    width: 38px;
+    height: 34px;
+
+    flex: 0 0 auto;
+
+    border-radius: 10px;
+
+    font-size: 12px;
+}
+
+/* 키보드 안내 */
+.flashcard-page .keyboard-hint {
+    position: absolute;
+    top: calc(50% + (var(--card-size) / 2) + 154px);
+    left: 50%;
+
+    width: max-content;
+    max-width: calc(100% - 24px);
+
+    margin: 0;
+
+    color: rgba(255, 255, 255, 0.38);
+
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-align: center;
+    text-transform: uppercase;
+
+    transform: translateX(-50%);
+}
+
+.flashcard-page .keyboard-hint kbd {
+    display: inline-block;
+
+    min-width: 24px;
+    margin: 0 3px;
+    padding: 3px 7px;
+
+    border: 1px solid rgba(255, 255, 255, 0.19);
+    border-radius: 6px;
+
+    color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.07);
+
+    font: inherit;
+}
+
+/* 세로 길이가 짧은 데스크톱 */
+@media (max-height: 820px) and (min-width: 701px) {
+    body.flashcard-page {
+        --card-size: min(46vh, 500px);
+    }
+
+    .flashcard-page .title {
+        top: calc(50% - (var(--card-size) / 2) - 88px);
+
+        font-size: clamp(36px, 5vw, 58px);
+    }
+
+    .flashcard-page .card-navigation {
+        top: calc(50% + (var(--card-size) / 2) + 40px);
+    }
+
+    .flashcard-page .keyboard-hint {
+        top: calc(50% + (var(--card-size) / 2) + 108px);
+    }
+}
+
+/* 플래시카드 모바일 */
+@media (max-width: 700px) {
+    body.flashcard-page {
+        --card-size: min(62vw, 360px);
+
+        min-height: 100svh;
+
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    .flashcard-page .flashcard-workspace {
+        min-height: 100svh;
+    }
+
+    .flashcard-page .title {
+        top: calc(50% - (var(--card-size) / 2) - 82px);
+
+        width: max-content;
+        max-width: calc(100% - 24px);
+
+        margin: 0;
+        padding: 0;
+
+        font-size: 38px;
+        text-align: center;
+        white-space: normal;
+
+        transform: translateX(-50%);
+    }
+
+    .flashcard-page .card-navigation {
+        top: calc(50% + (var(--card-size) / 2) + 42px);
+
+        max-width: calc(100% - 16px);
+    }
+
+    /* VOCA / PATTERN 네비게이터를 두 줄로 배치 */
+    .flashcard-page .mini-toc.horizontal-toc {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        width: max-content;
+        max-width: calc(100vw - 24px);
+
+        gap: 8px;
+        padding: 10px 12px;
+
+        overflow: visible;
+
+        border-radius: 14px;
+    }
+
+    .flashcard-page .horizontal-toc .toc-group {
+        flex-direction: row;
+        justify-content: center;
+
+        width: max-content;
+        gap: 6px;
+    }
+
+    .flashcard-page .horizontal-toc .toc-title,
+    .flashcard-page .horizontal-toc .toc-divider {
+        display: none;
+    }
+
+    .flashcard-page .horizontal-toc a {
+        width: 32px;
+        height: 30px;
+
+        border-radius: 9px;
+
+        font-size: 10px;
+    }
+
+    .flashcard-page .keyboard-hint {
+        top: calc(50% + (var(--card-size) / 2) + 148px);
+    }
+}
+
+/* ========================================
+   모션 최소화 설정
+======================================== */
+
 @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
+    html {
+        scroll-behavior: auto;
+    }
 
     .group,
     .english-door,

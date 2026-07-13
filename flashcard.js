@@ -1,7 +1,7 @@
 (() => {
     "use strict";
 
-    function initFlashcard() {
+    async function initFlashcard() {
         /* ========================================
            덱 데이터 불러오기
         ======================================== */
@@ -25,7 +25,7 @@
         }
 
         /*
-         * 현재 권장 구조:
+         * 권장 데이터 구조:
          *
          * {
          *     title: "Selecting",
@@ -33,7 +33,7 @@
          *     cards: [...]
          * }
          *
-         * 기존 배열 구조도 임시 호환합니다.
+         * 기존 배열 구조도 호환합니다.
          */
         const deck = Array.isArray(rawDeck)
             ? {
@@ -65,6 +65,9 @@
         const koreanCard =
             document.getElementById("koreanCard");
 
+        const englishDoor =
+            document.querySelector(".english-door");
+
         const doorFront =
             document.getElementById("doorFront");
 
@@ -82,6 +85,7 @@
             group,
             cardStage,
             koreanCard,
+            englishDoor,
             doorFront,
             doorBack,
             cardToc,
@@ -152,7 +156,9 @@
                 .join(" ");
 
             document.title =
-                fullTitle || deckKey.toUpperCase();
+                fullTitle ||
+                deckKey.toUpperCase() ||
+                "Flashcard";
         }
 
         /* ========================================
@@ -173,7 +179,199 @@
         }
 
         function toggleCard() {
+            if (navigationLocked) {
+                return;
+            }
+
             setCardOpen(!isCardOpen());
+        }
+
+        /* ========================================
+           CSS 시간값 변환
+        ======================================== */
+
+        function parseCssTime(value) {
+            const time =
+                String(value || "").trim();
+
+            if (time.endsWith("ms")) {
+                return Number.parseFloat(time) || 0;
+            }
+
+            if (time.endsWith("s")) {
+                return (
+                    Number.parseFloat(time) || 0
+                ) * 1000;
+            }
+
+            return Number.parseFloat(time) || 0;
+        }
+
+        function getTransitionTotal(element) {
+            const style =
+                window.getComputedStyle(element);
+
+            const durations =
+                style.transitionDuration
+                    .split(",")
+                    .map(parseCssTime);
+
+            const delays =
+                style.transitionDelay
+                    .split(",")
+                    .map(parseCssTime);
+
+            const totalTimes =
+                durations.map((duration, index) => {
+                    const delay =
+                        delays[index % delays.length] || 0;
+
+                    return duration + delay;
+                });
+
+            /*
+             * transitionend 이벤트 누락에 대비해
+             * 약간의 여유 시간을 추가합니다.
+             */
+            return Math.max(
+                0,
+                ...totalTimes
+            ) + 60;
+        }
+
+        /* ========================================
+           문 닫힘 완료 대기
+        ======================================== */
+
+        function waitForDoorTransition() {
+            return new Promise(resolve => {
+                let completed = false;
+
+                const finish = () => {
+                    if (completed) {
+                        return;
+                    }
+
+                    completed = true;
+
+                    englishDoor.removeEventListener(
+                        "transitionend",
+                        handleTransitionEnd
+                    );
+
+                    window.clearTimeout(
+                        fallbackTimer
+                    );
+
+                    resolve();
+                };
+
+                const handleTransitionEnd = event => {
+                    if (
+                        event.target === englishDoor &&
+                        event.propertyName === "transform"
+                    ) {
+                        finish();
+                    }
+                };
+
+                const fallbackTimer =
+                    window.setTimeout(
+                        finish,
+                        getTransitionTotal(englishDoor)
+                    );
+
+                englishDoor.addEventListener(
+                    "transitionend",
+                    handleTransitionEnd
+                );
+            });
+        }
+
+        async function closeCardAndWait() {
+            if (!isCardOpen()) {
+                return;
+            }
+
+            /*
+             * transitionend 감지를 먼저 등록한 뒤
+             * 닫힘 클래스를 적용합니다.
+             */
+            const transitionPromise =
+                waitForDoorTransition();
+
+            setCardOpen(false);
+
+            await transitionPromise;
+        }
+
+        /* ========================================
+           이미지 미리 불러오기
+        ======================================== */
+
+        function preloadImage(source) {
+            return new Promise(resolve => {
+                if (!source) {
+                    resolve();
+                    return;
+                }
+
+                const image = new Image();
+                let completed = false;
+
+                const finish = () => {
+                    if (completed) {
+                        return;
+                    }
+
+                    completed = true;
+                    resolve();
+                };
+
+                image.decoding = "async";
+
+                image.addEventListener(
+                    "load",
+                    finish,
+                    { once: true }
+                );
+
+                image.addEventListener(
+                    "error",
+                    finish,
+                    { once: true }
+                );
+
+                image.src = source;
+
+                if (image.complete) {
+                    finish();
+                }
+            });
+        }
+
+        function preloadCard(card) {
+            if (!card) {
+                return Promise.resolve();
+            }
+
+            return Promise.all([
+                preloadImage(card.front),
+                preloadImage(card.back)
+            ]);
+        }
+
+        function preloadAdjacentCards() {
+            const previousCard =
+                cards[currentIndex - 1];
+
+            const nextCard =
+                cards[currentIndex + 1];
+
+            Promise.allSettled([
+                preloadCard(previousCard),
+                preloadCard(nextCard)
+            ]);
         }
 
         /* ========================================
@@ -297,7 +495,7 @@
 
             /*
              * front = 영어 앞면
-             * back  = 카드를 열었을 때 보이는 한국어
+             * back  = 문을 열었을 때 보이는 한국어
              */
             const frontImage =
                 `url("${card.front}")`;
@@ -363,7 +561,7 @@
            이전·다음 카드 이동
         ======================================== */
 
-        function goToCard(nextIndex) {
+        async function goToCard(nextIndex) {
             if (
                 navigationLocked ||
                 nextIndex < 0 ||
@@ -373,27 +571,35 @@
                 return;
             }
 
-            const changeCard = () => {
+            navigationLocked = true;
+
+            const nextCard =
+                cards[nextIndex];
+
+            try {
+                /*
+                 * 카드가 열려 있으면 문을 완전히 닫은 뒤
+                 * 이미지 데이터를 변경합니다.
+                 */
+                await closeCardAndWait();
+
+                /*
+                 * 다음 영어·한국어 이미지를 모두 불러온 뒤
+                 * 화면의 카드 데이터를 변경합니다.
+                 */
+                await preloadCard(nextCard);
+
                 currentIndex = nextIndex;
+
                 renderCard();
-                navigationLocked = false;
-            };
-
-            /*
-             * 열린 상태에서는 먼저 닫은 후
-             * 다음 카드로 변경합니다.
-             */
-            if (isCardOpen()) {
-                navigationLocked = true;
-
-                setCardOpen(false);
-
-                window.setTimeout(
-                    changeCard,
-                    430
+                preloadAdjacentCards();
+            } catch (error) {
+                console.error(
+                    "[Flashcard] 카드 이동 중 오류가 발생했습니다.",
+                    error
                 );
-            } else {
-                changeCard();
+            } finally {
+                navigationLocked = false;
             }
         }
 
@@ -421,6 +627,8 @@
                 }
 
                 event.preventDefault();
+                event.stopPropagation();
+
                 toggleCard();
             }
         );
@@ -450,14 +658,16 @@
                  * Space:
                  * 카드 열기 및 닫기
                  */
-                if (
-                    event.key === " " &&
-                    event.target !== cardStage
-                ) {
+                if (event.key === " ") {
                     const interactiveElement =
-                        target?.closest("button, a");
+                        target?.closest(
+                            "button, a"
+                        );
 
-                    if (interactiveElement) {
+                    if (
+                        interactiveElement ||
+                        event.target === cardStage
+                    ) {
                         return;
                     }
 
@@ -497,9 +707,13 @@
 
                 /*
                  * Escape:
-                 * 카드 닫기
+                 * 열린 카드 닫기
                  */
                 if (event.key === "Escape") {
+                    if (navigationLocked) {
+                        return;
+                    }
+
                     setCardOpen(false);
                 }
             }
@@ -529,7 +743,16 @@
         renderPageTitle();
         createNavigator();
         setInitialCardFromHash();
+
+        /*
+         * 첫 카드 이미지를 모두 불러온 뒤 출력합니다.
+         */
+        await preloadCard(
+            cards[currentIndex]
+        );
+
         renderCard();
+        preloadAdjacentCards();
     }
 
     /* ========================================
@@ -539,9 +762,22 @@
     if (document.readyState === "loading") {
         document.addEventListener(
             "DOMContentLoaded",
-            initFlashcard
+            () => {
+                initFlashcard().catch(error => {
+                    console.error(
+                        "[Flashcard] 초기화 중 오류가 발생했습니다.",
+                        error
+                    );
+                });
+            },
+            { once: true }
         );
     } else {
-        initFlashcard();
+        initFlashcard().catch(error => {
+            console.error(
+                "[Flashcard] 초기화 중 오류가 발생했습니다.",
+                error
+            );
+        });
     }
 })();

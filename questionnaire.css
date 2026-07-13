@@ -1,0 +1,291 @@
+:root {
+    --card-size: 500px;
+    --card-radius: 15%;
+    --page-blue: #0846B0;
+    --point-yellow: #FFCF03;
+    --animation-duration: 0.82s;
+    --animation-easing: cubic-bezier(0.22, 0.72, 0.18, 1);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 30px 0 150px;
+    overflow-x: hidden;
+    background-color: var(--page-blue);
+}
+
+@font-face {
+    font-family: "Ownglyph_meetme-Rg";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_1@1.0/Ownglyph_meetme-Rg.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+}
+
+.title {
+    max-width: 1200px;
+    margin: 40px auto 20px;
+    padding: 0 130px;
+    color: #fff;
+    font-family: "Ownglyph_meetme-Rg", sans-serif;
+    font-size: clamp(50px, 6vw, 80px);
+    line-height: 1.15;
+    text-align: center;
+}
+
+.title span { color: var(--point-yellow); }
+
+.card-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.group {
+    position: relative;
+    width: var(--card-size);
+    scroll-margin-top: 60px;
+    transform: translateX(0);
+    transform-origin: center;
+    transition: transform var(--animation-duration) var(--animation-easing);
+    will-change: transform;
+}
+
+.group.open {
+    transform: translateX(calc(var(--card-size) / 2));
+}
+
+.card-stage {
+    position: relative;
+    width: var(--card-size);
+    height: var(--card-size);
+    margin: 100px 0;
+    border: 0;
+    border-radius: var(--card-radius);
+    background-color: #103D88;
+    perspective: 1800px;
+    perspective-origin: left center;
+    overflow: visible;
+    cursor: pointer;
+    outline: none;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    box-shadow: 0 20px 45px rgba(0, 24, 84, 0.18);
+}
+
+.card-stage:focus-visible {
+    box-shadow: 0 0 0 5px var(--point-yellow), 0 20px 45px rgba(0, 24, 84, 0.22);
+}
+
+.korean-card {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--card-radius);
+    object-fit: cover;
+    object-position: center;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.english-door {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--card-radius);
+    transform-origin: left center;
+    transform: rotateY(0deg) translateZ(1px);
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    transition:
+        transform var(--animation-duration) var(--animation-easing),
+        box-shadow var(--animation-duration) var(--animation-easing);
+    will-change: transform;
+    pointer-events: none;
+}
+
+.door-face {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--card-radius);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    pointer-events: none;
+}
+
+.door-front {
+    z-index: 2;
+    transform: rotateY(0deg) translateZ(0.6px);
+}
+
+.door-back {
+    z-index: 1;
+    transform: rotateY(180deg) translateZ(0.6px);
+}
+
+.group.open .english-door {
+    transform: rotateY(-180deg) translateZ(1px);
+    box-shadow: -18px 18px 30px rgba(0, 22, 85, 0.2);
+}
+
+.mini-toc {
+    position: fixed;
+    top: 50%;
+    right: 24px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 82px;
+    max-height: calc(100vh - 24px);
+    padding: 15px 10px;
+    overflow-y: auto;
+    transform: translateY(-50%);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 23px;
+    background-color: rgba(5, 43, 113, 0.88);
+    box-shadow: 0 15px 35px rgba(0, 20, 70, 0.3);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    scrollbar-width: none;
+}
+
+.mini-toc::-webkit-scrollbar { display: none; }
+
+.toc-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    width: 100%;
+}
+
+.toc-title {
+    margin-bottom: 3px;
+    color: rgba(255, 255, 255, 0.62);
+    font-family: Arial, sans-serif;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+}
+
+.mini-toc a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 35px;
+    flex-shrink: 0;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 11px;
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.08);
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    text-decoration: none;
+    transition:
+        color 0.25s ease,
+        background-color 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.mini-toc a:hover {
+    color: var(--page-blue);
+    background-color: #fff;
+    border-color: #fff;
+    transform: scale(1.08);
+}
+
+.mini-toc a.active {
+    color: var(--page-blue);
+    background-color: var(--point-yellow);
+    border-color: var(--point-yellow);
+    transform: scale(1.08);
+}
+
+.toc-divider {
+    width: 40px;
+    height: 1px;
+    flex-shrink: 0;
+    background-color: rgba(255, 255, 255, 0.23);
+}
+
+@media (max-width: 1100px) {
+    :root { --card-size: min(43vw, 500px); }
+
+    .title {
+        padding: 0 100px 0 25px;
+        font-size: clamp(48px, 7vw, 65px);
+    }
+
+    .mini-toc { right: 10px; }
+}
+
+@media (max-width: 700px) {
+    :root { --card-size: min(70vw, 500px); }
+
+    body { padding-top: 10px; }
+
+    .title {
+        margin-top: 25px;
+        padding: 0 70px 0 14px;
+        font-size: 42px;
+    }
+
+    .card-stage { margin: 70px 0; }
+
+    .group.open {
+        transform: translateX(calc(var(--card-size) / 2)) scale(0.88);
+    }
+
+    .mini-toc {
+        right: 5px;
+        width: 56px;
+        padding: 10px 6px;
+        border-radius: 16px;
+    }
+
+    .toc-title { font-size: 7px; }
+
+    .mini-toc a {
+        width: 34px;
+        height: 28px;
+        border-radius: 8px;
+        font-size: 11px;
+    }
+
+    .toc-divider { width: 29px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+
+    .group,
+    .english-door,
+    .mini-toc a {
+        transition-duration: 0.01ms !important;
+        transition-delay: 0s !important;
+    }
+}

@@ -472,6 +472,201 @@
                     ]
                 ]
             )
-        }
+        },
+        "fd03-1": {
+    title: "Value",
+    highlight: "(Lightness)",
+
+    cards: createTextDeck(
+        "Value",
+
+        [
+            ["value", "명도"],
+            ["light", "밝은"],
+            ["dark", "어두운"],
+            ["bright", "밝고 빛나는"],
+            ["vibrant", "생생한"],
+            ["calm", "차분한"]
+        ],
+
+        [
+            [
+                "Value is the lightness of a color.",
+                "색의 명도는 색의 밝기를 나타냅니다.",
+                "lightness"
+            ],
+            [
+                "High value colors are light.",
+                "명도가 높은 색은 밝습니다.",
+                "High value"
+            ],
+            [
+                "Low value colors are dark.",
+                "명도가 낮은 색은 어둡습니다.",
+                "Low value"
+            ],
+            [
+                "My circle is high value. It feels bright and vibrant.",
+                "내 원은 명도가 높아요. 밝고 생생하게 느껴집니다.",
+                "bright"
+            ],
+            [
+                "This star is low value. It feels dark and calm.",
+                "이 별은 명도가 낮아요. 어둡고 차분하게 느껴집니다.",
+                "dark"
+            ],
+            [
+                "The rectangle is brighter than the triangle.",
+                "사각형이 삼각형보다 더 밝습니다.",
+                "brighter"
+            ]
+        ]
+    )
+},
+        "fd03-2": {
+    title: "",
+    highlight: "Chroma",
+
+    cards: createTextDeck(
+        "Chroma",
+
+        [
+            ["chroma", "채도"],
+            ["saturation", "채도"],
+            ["vivid", "선명한"],
+            ["muted", "탁한"],
+            ["dull", "흐린"]
+        ],
+
+        [
+            [
+                "Chroma shows how intense a color is.",
+                "채도는 색의 강도를 나타냅니다.",
+                "intense"
+            ],
+            [
+                "High chroma colors are bright, vivid, and strong.",
+                "채도가 높은 색은 밝고 선명하며 강렬합니다.",
+                "High chroma"
+            ],
+            [
+                "Low chroma colors are dull, muted, and closer to gray.",
+                "채도가 낮은 색은 흐리고 탁하며 회색에 가깝습니다.",
+                "Low chroma"
+            ],
+            [
+                "My heart is high chroma. It looks vivid and strong.",
+                "내 하트는 채도가 높아요. 선명하고 강하게 보여요.",
+                "vivid"
+            ],
+            [
+                "This triangle is low chroma. It feels muted and soft.",
+                "이 삼각형은 채도가 낮아요. 탁하고 부드럽게 느껴집니다.",
+                "muted"
+            ],
+            [
+                "The circle is more vivid than the square.",
+                "원이 사각형보다 더 선명합니다.",
+                "more vivid"
+            ]
+        ]
+    )
+},
+        "fd03-3": {
+    title: "Color",
+    highlight: "Temperature",
+
+    cards: createTextDeck(
+        "Color Temperature",
+
+        [
+            ["temperature", "온도"],
+            ["warm", "따뜻한"],
+            ["cool", "차가운"],
+            ["neutral", "중립적인"]
+        ],
+
+        [
+            [
+                "Warm colors are red, orange, and yellow.",
+                "따뜻한 색은 빨강, 주황, 노랑입니다.",
+                "Warm colors"
+            ],
+            [
+                "Cool colors are blue and green.",
+                "차가운 색은 파랑과 초록입니다.",
+                "Cool colors"
+            ],
+            [
+                "Neutral colors are gray and beige.",
+                "중립적인 색은 회색과 베이지입니다.",
+                "Neutral colors"
+            ],
+            [
+                "They change depending on the colors around them.",
+                "주변 색상에 따라 색의 느낌이 달라집니다.",
+                "depending on"
+            ],
+            [
+                "Red feels warm.",
+                "빨강은 따뜻하게 느껴집니다.",
+                "warm"
+            ],
+            [
+                "Blue feels cool.",
+                "파랑은 차갑게 느껴집니다.",
+                "cool"
+            ],
+            [
+                "Red feels warmer than blue.",
+                "빨강이 파랑보다 더 따뜻하게 느껴집니다.",
+                "warmer"
+            ]
+        ]
+    )
+},
+        "fd03-4": {
+    title: "",
+    highlight: "Contrast",
+
+    cards: createTextDeck(
+        "Contrast",
+
+        [
+            ["contrast", "대비"],
+            ["stand out", "돋보이다"],
+            ["similar", "비슷하다"],
+            ["subtle", "은은한"]
+        ],
+
+        [
+            [
+                "Contrast shows how different two colors are.",
+                "대비는 두 색이 얼마나 다른지 보여줍니다.",
+                "Contrast"
+            ],
+            [
+                "High contrast means the colors stand out strongly.",
+                "대비가 강하면 색이 뚜렷하게 돋보입니다.",
+                "stand out"
+            ],
+            [
+                "Low contrast means the colors look similar and subtle.",
+                "대비가 약하면 색이 비슷하고 은은하게 보입니다.",
+                "subtle"
+            ],
+            [
+                "This yellow circle and blue square have high contrast.",
+                "이 노란 원과 파란 사각형은 대비가 강합니다.",
+                "high contrast"
+            ],
+            [
+                "These two greens have low contrast.",
+                "이 두 개의 초록은 대비가 약합니다.",
+                "low contrast"
+            ]
+        ]
+    )
+}
     };
 })();

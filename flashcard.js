@@ -6,9 +6,14 @@
            덱 데이터 불러오기
         ======================================== */
 
-        const deckKey = document.body.dataset.deck?.trim();
-        const decks = window.FLASHCARD_DECKS || {};
-        const rawDeck = decks[deckKey];
+        const deckKey =
+            document.body.dataset.deck?.trim();
+
+        const decks =
+            window.FLASHCARD_DECKS || {};
+
+        const rawDeck =
+            decks[deckKey];
 
         if (!deckKey) {
             console.error(
@@ -32,20 +37,23 @@
          *     highlight: "& Moving",
          *     cards: [...]
          * }
-         *
-         * 기존 배열 구조도 호환합니다.
          */
-        const deck = Array.isArray(rawDeck)
-            ? {
-                title: "",
-                highlight: "",
-                cards: rawDeck
-            }
-            : rawDeck;
+        const deck =
+            Array.isArray(rawDeck)
+                ? {
+                    title: "",
+                    highlight: "",
+                    cards: rawDeck
+                }
+                : rawDeck;
 
-        const cards = deck.cards;
+        const cards =
+            deck.cards;
 
-        if (!Array.isArray(cards) || cards.length === 0) {
+        if (
+            !Array.isArray(cards) ||
+            cards.length === 0
+        ) {
             console.error(
                 `[Flashcard] "${deckKey}"의 카드 데이터가 없습니다.`
             );
@@ -79,7 +87,8 @@
 
         const pageTitle =
             document.getElementById("pageTitle") ||
-            document.querySelector(".title");
+            document.querySelector(".title") ||
+            null;
 
         const requiredElements = {
             group,
@@ -88,15 +97,13 @@
             englishDoor,
             doorFront,
             doorBack,
-            cardToc,
-            pageTitle
+            cardToc
         };
 
-        const missingElements = Object.entries(
-            requiredElements
-        )
-            .filter(([, element]) => !element)
-            .map(([name]) => name);
+        const missingElements =
+            Object.entries(requiredElements)
+                .filter(([, element]) => !element)
+                .map(([name]) => name);
 
         if (missingElements.length > 0) {
             console.error(
@@ -124,30 +131,6 @@
             const highlightTitle =
                 String(deck.highlight || "").trim();
 
-            pageTitle.replaceChildren();
-
-            if (normalTitle) {
-                pageTitle.append(
-                    document.createTextNode(normalTitle)
-                );
-            }
-
-            if (normalTitle && highlightTitle) {
-                pageTitle.append(
-                    document.createTextNode(" ")
-                );
-            }
-
-            if (highlightTitle) {
-                const highlight =
-                    document.createElement("span");
-
-                highlight.textContent =
-                    highlightTitle;
-
-                pageTitle.append(highlight);
-            }
-
             const fullTitle = [
                 normalTitle,
                 highlightTitle
@@ -155,6 +138,10 @@
                 .filter(Boolean)
                 .join(" ");
 
+            /*
+             * 화면에는 타이틀을 만들지 않고,
+             * 브라우저 탭 제목만 설정합니다.
+             */
             document.title =
                 fullTitle ||
                 deckKey.toUpperCase() ||
@@ -166,11 +153,16 @@
         ======================================== */
 
         function isCardOpen() {
-            return group.classList.contains("open");
+            return group.classList.contains(
+                "open"
+            );
         }
 
         function setCardOpen(open) {
-            group.classList.toggle("open", open);
+            group.classList.toggle(
+                "open",
+                open
+            );
 
             cardStage.setAttribute(
                 "aria-expanded",
@@ -183,7 +175,9 @@
                 return;
             }
 
-            setCardOpen(!isCardOpen());
+            setCardOpen(
+                !isCardOpen()
+            );
         }
 
         /* ========================================
@@ -195,16 +189,23 @@
                 String(value || "").trim();
 
             if (time.endsWith("ms")) {
-                return Number.parseFloat(time) || 0;
+                return (
+                    Number.parseFloat(time) ||
+                    0
+                );
             }
 
             if (time.endsWith("s")) {
                 return (
-                    Number.parseFloat(time) || 0
+                    Number.parseFloat(time) ||
+                    0
                 ) * 1000;
             }
 
-            return Number.parseFloat(time) || 0;
+            return (
+                Number.parseFloat(time) ||
+                0
+            );
         }
 
         function getTransitionTotal(element) {
@@ -222,17 +223,18 @@
                     .map(parseCssTime);
 
             const totalTimes =
-                durations.map((duration, index) => {
-                    const delay =
-                        delays[index % delays.length] || 0;
+                durations.map(
+                    (duration, index) => {
+                        const delay =
+                            delays[
+                            index %
+                            delays.length
+                            ] || 0;
 
-                    return duration + delay;
-                });
+                        return duration + delay;
+                    }
+                );
 
-            /*
-             * transitionend 이벤트 누락에 대비해
-             * 약간의 여유 시간을 추가합니다.
-             */
             return Math.max(
                 0,
                 ...totalTimes
@@ -266,19 +268,24 @@
                     resolve();
                 };
 
-                const handleTransitionEnd = event => {
-                    if (
-                        event.target === englishDoor &&
-                        event.propertyName === "transform"
-                    ) {
-                        finish();
-                    }
-                };
+                const handleTransitionEnd =
+                    event => {
+                        if (
+                            event.target ===
+                            englishDoor &&
+                            event.propertyName ===
+                            "transform"
+                        ) {
+                            finish();
+                        }
+                    };
 
                 const fallbackTimer =
                     window.setTimeout(
                         finish,
-                        getTransitionTotal(englishDoor)
+                        getTransitionTotal(
+                            englishDoor
+                        )
                     );
 
                 englishDoor.addEventListener(
@@ -293,10 +300,6 @@
                 return;
             }
 
-            /*
-             * transitionend 감지를 먼저 등록한 뒤
-             * 닫힘 클래스를 적용합니다.
-             */
             const transitionPromise =
                 waitForDoorTransition();
 
@@ -305,60 +308,13 @@
             await transitionPromise;
         }
 
-        /* ========================================
-           이미지 미리 불러오기
-        ======================================== */
-
-        function preloadImage(source) {
-            return new Promise(resolve => {
-                if (!source) {
-                    resolve();
-                    return;
-                }
-
-                const image = new Image();
-                let completed = false;
-
-                const finish = () => {
-                    if (completed) {
-                        return;
-                    }
-
-                    completed = true;
-                    resolve();
-                };
-
-                image.decoding = "async";
-
-                image.addEventListener(
-                    "load",
-                    finish,
-                    { once: true }
-                );
-
-                image.addEventListener(
-                    "error",
-                    finish,
-                    { once: true }
-                );
-
-                image.src = source;
-
-                if (image.complete) {
-                    finish();
-                }
-            });
-        }
-
-        function preloadCard(card) {
-            if (!card) {
-                return Promise.resolve();
-            }
-
-            return Promise.all([
-                preloadImage(card.front),
-                preloadImage(card.back)
-            ]);
+        /*
+         * 텍스트 카드이기 때문에
+         * 별도의 이미지 로딩은 필요하지 않습니다.
+         * 기존 이동 로직과의 호환성을 위해 유지합니다.
+         */
+        function preloadCard() {
+            return Promise.resolve();
         }
 
         function preloadAdjacentCards() {
@@ -386,24 +342,40 @@
 
             cards.forEach((card, index) => {
                 const section =
-                    String(card.section || "CARD");
+                    String(
+                        card.section ||
+                        "CARD"
+                    );
 
                 if (!sectionMap.has(section)) {
-                    sectionMap.set(section, []);
-                    sectionOrder.push(section);
+                    sectionMap.set(
+                        section,
+                        []
+                    );
+
+                    sectionOrder.push(
+                        section
+                    );
                 }
 
-                sectionMap.get(section).push({
-                    card,
-                    index
-                });
+                sectionMap
+                    .get(section)
+                    .push({
+                        card,
+                        index
+                    });
             });
 
             sectionOrder.forEach(
-                (section, sectionIndex) => {
+                (
+                    section,
+                    sectionIndex
+                ) => {
                     if (sectionIndex > 0) {
                         const divider =
-                            document.createElement("div");
+                            document.createElement(
+                                "div"
+                            );
 
                         divider.className =
                             "toc-divider";
@@ -413,17 +385,23 @@
                             "true"
                         );
 
-                        cardToc.append(divider);
+                        cardToc.append(
+                            divider
+                        );
                     }
 
                     const tocGroup =
-                        document.createElement("div");
+                        document.createElement(
+                            "div"
+                        );
 
                     tocGroup.className =
                         "toc-group";
 
                     const tocTitle =
-                        document.createElement("div");
+                        document.createElement(
+                            "div"
+                        );
 
                     tocTitle.className =
                         "toc-title";
@@ -431,15 +409,25 @@
                     tocTitle.textContent =
                         section;
 
-                    tocGroup.append(tocTitle);
+                    tocGroup.append(
+                        tocTitle
+                    );
 
                     const sectionCards =
                         sectionMap.get(section);
 
                     sectionCards.forEach(
-                        ({ card, index }, localIndex) => {
+                        (
+                            {
+                                card,
+                                index
+                            },
+                            localIndex
+                        ) => {
                             const link =
-                                document.createElement("a");
+                                document.createElement(
+                                    "a"
+                                );
 
                             link.href =
                                 `#${card.id}`;
@@ -450,9 +438,12 @@
                             link.textContent =
                                 card.navLabel ||
                                 (
-                                    section === "VOCA"
+                                    section ===
+                                        "VOCA"
                                         ? `V${localIndex + 1}`
-                                        : String(localIndex + 1)
+                                        : String(
+                                            localIndex + 1
+                                        )
                                 );
 
                             link.setAttribute(
@@ -465,83 +456,515 @@
                                 "click",
                                 event => {
                                     event.preventDefault();
-                                    goToCard(index);
+
+                                    goToCard(
+                                        index
+                                    );
                                 }
                             );
 
-                            tocGroup.append(link);
+                            tocGroup.append(
+                                link
+                            );
                         }
                     );
 
-                    cardToc.append(tocGroup);
+                    cardToc.append(
+                        tocGroup
+                    );
                 }
             );
 
             tocLinks = [
-                ...cardToc.querySelectorAll("a")
+                ...cardToc.querySelectorAll(
+                    "a"
+                )
             ];
         }
+
+        /* ========================================
+           카드 내용 생성
+        ======================================== */
+
+        const createFace = text => {
+            const face =
+                document.createDocumentFragment();
+
+            const eyebrow =
+                document.createElement("div");
+
+            eyebrow.className =
+                "card-eyebrow";
+
+            eyebrow.textContent =
+                card.eyebrow || "";
+
+            const message =
+                document.createElement("div");
+
+            message.className =
+                `card-message ${card.section === "VOCA"
+                    ? "voca-message"
+                    : "pattern-message"
+                }`;
+
+            const fullText =
+                String(text || "");
+
+            /*
+             * 문자열 하나와 배열 모두 지원합니다.
+             *
+             * "말미잘"
+             *
+             * 또는
+             *
+             * ["Trapezoid", "사다리꼴"]
+             */
+            const highlights =
+                Array.isArray(card.highlightText)
+                    ? card.highlightText
+                    : card.highlightText
+                        ? [card.highlightText]
+                        : [];
+
+            const validHighlights =
+                highlights
+                    .map(value =>
+                        String(value).trim()
+                    )
+                    .filter(Boolean)
+                    .sort(
+                        (a, b) =>
+                            b.length - a.length
+                    );
+
+            if (validHighlights.length === 0) {
+                message.textContent =
+                    fullText;
+            } else {
+                const escapedHighlights =
+                    validHighlights.map(
+                        value =>
+                            value.replace(
+                                /[.*+?^${}()|[\]\\]/g,
+                                "\\$&"
+                            )
+                    );
+
+                const pattern =
+                    new RegExp(
+                        escapedHighlights.join("|"),
+                        "gi"
+                    );
+
+                let currentPosition = 0;
+                let match;
+
+                while (
+                    (
+                        match =
+                        pattern.exec(fullText)
+                    ) !== null
+                ) {
+                    /*
+                     * 강조 문구 앞의 일반 글자
+                     */
+                    message.append(
+                        fullText.slice(
+                            currentPosition,
+                            match.index
+                        )
+                    );
+
+                    /*
+                     * 노란색 강조 문구
+                     */
+                    const highlight =
+                        document.createElement(
+                            "span"
+                        );
+
+                    highlight.textContent =
+                        match[0];
+
+                    message.append(
+                        highlight
+                    );
+
+                    currentPosition =
+                        pattern.lastIndex;
+                }
+
+                /*
+                 * 마지막 강조 문구 뒤의 일반 글자
+                 */
+                message.append(
+                    fullText.slice(
+                        currentPosition
+                    )
+                );
+            }
+
+            const footer =
+                document.createElement("div");
+
+            footer.className =
+                "card-footer";
+
+            footer.textContent =
+                card.footer ||
+                "@ AFFINITY UNIVERSE";
+
+            face.append(
+                eyebrow,
+                message,
+                footer
+            );
+
+            return face;
+        };
 
         /* ========================================
            현재 카드 출력
         ======================================== */
 
+        const appendHighlightedText = (
+            element,
+            text,
+            highlightText
+        ) => {
+            const fullText =
+                String(text || "");
+
+            const highlights =
+                Array.isArray(highlightText)
+                    ? highlightText
+                    : highlightText
+                        ? [highlightText]
+                        : [];
+
+            if (highlights.length === 0) {
+                element.textContent =
+                    fullText;
+
+                return;
+            }
+
+            const escapedHighlights =
+                highlights
+                    .filter(Boolean)
+                    .map(value =>
+                        String(value).replace(
+                            /[.*+?^${}()|[\]\\]/g,
+                            "\\$&"
+                        )
+                    );
+
+            if (
+                escapedHighlights.length === 0
+            ) {
+                element.textContent =
+                    fullText;
+
+                return;
+            }
+
+            /*
+             * 긴 문구부터 검사해서
+             * 일부 단어가 먼저 잘리는 것을 방지합니다.
+             */
+            escapedHighlights.sort(
+                (a, b) =>
+                    b.length - a.length
+            );
+
+            const pattern =
+                new RegExp(
+                    `(${escapedHighlights.join("|")})`,
+                    "gi"
+                );
+
+            const parts =
+                fullText.split(pattern);
+
+            parts.forEach(part => {
+                const isHighlight =
+                    highlights.some(
+                        value =>
+                            String(value)
+                                .toLocaleLowerCase() ===
+                            part.toLocaleLowerCase()
+                    );
+
+                if (isHighlight) {
+                    const highlight =
+                        document.createElement(
+                            "span"
+                        );
+
+                    highlight.textContent =
+                        part;
+
+                    element.append(
+                        highlight
+                    );
+                } else {
+                    element.append(part);
+                }
+            });
+        };
+
         function renderCard() {
-            const card = cards[currentIndex];
+            const card =
+                cards[currentIndex];
 
             if (!card) {
                 return;
             }
 
+            group.id =
+                card.id;
+
             /*
-             * front = 영어 앞면
-             * back  = 문을 열었을 때 보이는 한국어
+             * 정규식 특수문자 처리
              */
-            const frontImage =
-                `url("${card.front}")`;
+            function escapeRegExp(value) {
+                return String(value).replace(
+                    /[.*+?^${}()|[\]\\]/g,
+                    "\\$&"
+                );
+            }
 
-            group.id = card.id;
+            /*
+             * 카드 한 면 생성
+             *
+             * 반드시 renderCard() 내부에 있어야
+             * 현재 card 데이터를 사용할 수 있습니다.
+             */
+            function createFace(text) {
+                const face =
+                    document.createDocumentFragment();
 
-            koreanCard.src = card.back;
-            koreanCard.alt = "";
+                const eyebrow =
+                    document.createElement("div");
 
-            doorFront.style.backgroundImage =
-                frontImage;
+                eyebrow.className =
+                    "card-eyebrow";
 
-            doorBack.style.backgroundImage =
-                frontImage;
+                eyebrow.textContent =
+                    card.eyebrow || "";
+
+                const message =
+                    document.createElement("div");
+
+                message.className =
+                    `card-message ${card.section === "VOCA"
+                        ? "voca-message"
+                        : "pattern-message"
+                    }`;
+
+                const fullText =
+                    String(text || "");
+
+                /*
+                 * 세 번째 데이터가 문자열이면 배열로 변환합니다.
+                 */
+                const highlightValues =
+                    Array.isArray(
+                        card.highlightText
+                    )
+                        ? card.highlightText
+                        : card.highlightText
+                            ? [card.highlightText]
+                            : [];
+
+                const highlights =
+                    highlightValues
+                        .map(value =>
+                            String(value).trim()
+                        )
+                        .filter(Boolean)
+                        .sort(
+                            (a, b) =>
+                                b.length -
+                                a.length
+                        );
+
+                /*
+                 * 강조 문구가 없으면
+                 * 일반 텍스트로 표시합니다.
+                 */
+                if (
+                    highlights.length === 0
+                ) {
+                    message.textContent =
+                        fullText;
+                } else {
+                    const pattern =
+                        new RegExp(
+                            highlights
+                                .map(
+                                    escapeRegExp
+                                )
+                                .join("|"),
+                            "gi"
+                        );
+
+                    let lastIndex = 0;
+                    let match;
+
+                    while (
+                        (
+                            match =
+                            pattern.exec(
+                                fullText
+                            )
+                        ) !== null
+                    ) {
+                        /*
+                         * 강조 문구 앞의 일반 글자
+                         */
+                        if (
+                            match.index >
+                            lastIndex
+                        ) {
+                            message.append(
+                                document.createTextNode(
+                                    fullText.slice(
+                                        lastIndex,
+                                        match.index
+                                    )
+                                )
+                            );
+                        }
+
+                        /*
+                         * 노란색 강조 글자
+                         */
+                        const highlight =
+                            document.createElement(
+                                "span"
+                            );
+
+                        highlight.textContent =
+                            match[0];
+
+                        message.append(
+                            highlight
+                        );
+
+                        lastIndex =
+                            pattern.lastIndex;
+
+                        /*
+                         * 빈 문자열 정규식으로 인한
+                         * 무한 반복 방지
+                         */
+                        if (
+                            match[0].length === 0
+                        ) {
+                            pattern.lastIndex += 1;
+                        }
+                    }
+
+                    /*
+                     * 마지막 강조 글자 이후의 일반 글자
+                     */
+                    if (
+                        lastIndex <
+                        fullText.length
+                    ) {
+                        message.append(
+                            document.createTextNode(
+                                fullText.slice(
+                                    lastIndex
+                                )
+                            )
+                        );
+                    }
+                }
+
+                const footer =
+                    document.createElement("div");
+
+                footer.className =
+                    "card-footer";
+
+                footer.textContent =
+                    card.footer ||
+                    "@ AFFINITY UNIVERSE";
+
+                face.append(
+                    eyebrow,
+                    message,
+                    footer
+                );
+
+                return face;
+            }
+
+            /*
+             * 한국어 카드
+             */
+            koreanCard.replaceChildren(
+                createFace(
+                    card.backText
+                )
+            );
+
+            /*
+             * 영어 카드 앞면
+             */
+            doorFront.replaceChildren(
+                createFace(
+                    card.frontText
+                )
+            );
+
+            /*
+             * 영어 카드 뒷면
+             */
+            doorBack.replaceChildren(
+                createFace(
+                    card.frontText
+                )
+            );
 
             cardStage.setAttribute(
                 "aria-label",
-                `${card.label || `Card ${currentIndex + 1}`} 카드 열기`
+                `${card.label ||
+                `Card ${currentIndex + 1}`
+                } 카드 열기`
             );
 
-            tocLinks.forEach((link, index) => {
-                const active =
-                    index === currentIndex;
+            tocLinks.forEach(
+                (link, index) => {
+                    const active =
+                        index === currentIndex;
 
-                link.classList.toggle(
-                    "active",
-                    active
-                );
-
-                if (active) {
-                    link.setAttribute(
-                        "aria-current",
-                        "true"
+                    link.classList.toggle(
+                        "active",
+                        active
                     );
 
-                    link.scrollIntoView({
-                        behavior: "smooth",
-                        block: "nearest",
-                        inline: "center"
-                    });
-                } else {
-                    link.removeAttribute(
-                        "aria-current"
-                    );
+                    if (active) {
+                        link.setAttribute(
+                            "aria-current",
+                            "true"
+                        );
+
+                        link.scrollIntoView({
+                            behavior: "smooth",
+                            block: "nearest",
+                            inline: "center"
+                        });
+                    } else {
+                        link.removeAttribute(
+                            "aria-current"
+                        );
+                    }
                 }
-            });
+            );
 
             try {
                 history.replaceState(
@@ -561,7 +984,9 @@
            이전·다음 카드 이동
         ======================================== */
 
-        async function goToCard(nextIndex) {
+        async function goToCard(
+            nextIndex
+        ) {
             if (
                 navigationLocked ||
                 nextIndex < 0 ||
@@ -578,18 +1003,17 @@
 
             try {
                 /*
-                 * 카드가 열려 있으면 문을 완전히 닫은 뒤
-                 * 이미지 데이터를 변경합니다.
+                 * 카드가 열려 있으면 완전히 닫은 후
+                 * 다음 카드로 이동합니다.
                  */
                 await closeCardAndWait();
 
-                /*
-                 * 다음 영어·한국어 이미지를 모두 불러온 뒤
-                 * 화면의 카드 데이터를 변경합니다.
-                 */
-                await preloadCard(nextCard);
+                await preloadCard(
+                    nextCard
+                );
 
-                currentIndex = nextIndex;
+                currentIndex =
+                    nextIndex;
 
                 renderCard();
                 preloadAdjacentCards();
@@ -641,7 +1065,8 @@
             "keydown",
             event => {
                 const target =
-                    event.target instanceof Element
+                    event.target instanceof
+                        Element
                         ? event.target
                         : null;
 
@@ -666,12 +1091,14 @@
 
                     if (
                         interactiveElement ||
-                        event.target === cardStage
+                        event.target ===
+                        cardStage
                     ) {
                         return;
                     }
 
                     event.preventDefault();
+
                     toggleCard();
 
                     return;
@@ -681,7 +1108,10 @@
                  * 왼쪽 화살표:
                  * 이전 카드
                  */
-                if (event.key === "ArrowLeft") {
+                if (
+                    event.key ===
+                    "ArrowLeft"
+                ) {
                     event.preventDefault();
 
                     goToCard(
@@ -695,7 +1125,10 @@
                  * 오른쪽 화살표:
                  * 다음 카드
                  */
-                if (event.key === "ArrowRight") {
+                if (
+                    event.key ===
+                    "ArrowRight"
+                ) {
                     event.preventDefault();
 
                     goToCard(
@@ -709,7 +1142,10 @@
                  * Escape:
                  * 열린 카드 닫기
                  */
-                if (event.key === "Escape") {
+                if (
+                    event.key ===
+                    "Escape"
+                ) {
                     if (navigationLocked) {
                         return;
                     }
@@ -732,7 +1168,8 @@
                 );
 
             if (hashIndex >= 0) {
-                currentIndex = hashIndex;
+                currentIndex =
+                    hashIndex;
             }
         }
 
@@ -744,9 +1181,6 @@
         createNavigator();
         setInitialCardFromHash();
 
-        /*
-         * 첫 카드 이미지를 모두 불러온 뒤 출력합니다.
-         */
         await preloadCard(
             cards[currentIndex]
         );
@@ -759,25 +1193,32 @@
        문서 로딩 완료 후 실행
     ======================================== */
 
-    if (document.readyState === "loading") {
+    if (
+        document.readyState ===
+        "loading"
+    ) {
         document.addEventListener(
             "DOMContentLoaded",
             () => {
-                initFlashcard().catch(error => {
-                    console.error(
-                        "[Flashcard] 초기화 중 오류가 발생했습니다.",
-                        error
-                    );
-                });
+                initFlashcard()
+                    .catch(error => {
+                        console.error(
+                            "[Flashcard] 초기화 중 오류가 발생했습니다.",
+                            error
+                        );
+                    });
             },
-            { once: true }
+            {
+                once: true
+            }
         );
     } else {
-        initFlashcard().catch(error => {
-            console.error(
-                "[Flashcard] 초기화 중 오류가 발생했습니다.",
-                error
-            );
-        });
+        initFlashcard()
+            .catch(error => {
+                console.error(
+                    "[Flashcard] 초기화 중 오류가 발생했습니다.",
+                    error
+                );
+            });
     }
 })();

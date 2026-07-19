@@ -1,18 +1,98 @@
 :root {
     --card-size: 500px;
     --card-radius: 15%;
-    --page-blue: #0846B0;
-    --point-yellow: #FFCF03;
+    --page-blue: #0846b0;
+    --point-yellow: #ffcf03;
     --animation-duration: 0.82s;
-    --animation-easing: cubic-bezier(0.22, 0.72, 0.18, 1);
+    --animation-easing:
+        cubic-bezier(0.22, 0.72, 0.18, 1);
+}
+
+/* ========================================
+   페이퍼로지 폰트
+======================================== */
+
+@font-face {
+    font-family: "Paperozi";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-1Thin.woff2") format("woff2");
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Paperozi";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-2ExtraLight.woff2") format("woff2");
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Paperozi";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-3Light.woff2") format("woff2");
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Paperozi";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-4Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Paperozi";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-5Medium.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Paperozi";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-6SemiBold.woff2") format("woff2");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Paperozi";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-7Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Paperozi";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-8ExtraBold.woff2") format("woff2");
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Paperozi";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-9Black.woff2") format("woff2");
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
 }
 
 /* ========================================
    공통 기본 설정
 ======================================== */
 
-* {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
+    font-family: "Paperozi", sans-serif;
 }
 
 html {
@@ -21,6 +101,7 @@ html {
 
 body {
     position: relative;
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -32,14 +113,8 @@ body {
     overflow-x: hidden;
 
     background-color: var(--page-blue);
-}
 
-@font-face {
-    font-family: "Ownglyph_meetme-Rg";
-    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_1@1.0/Ownglyph_meetme-Rg.woff2")
-        format("woff2");
-    font-weight: normal;
-    font-style: normal;
+    font-family: "Paperozi", sans-serif;
 }
 
 /* ========================================
@@ -48,12 +123,13 @@ body {
 
 .title {
     max-width: 1200px;
+
     margin: 40px auto 20px;
     padding: 0 130px;
 
-    color: #FFFFFF;
+    color: #ffffff;
 
-    font-family: "Ownglyph_meetme-Rg", sans-serif;
+    font-family: "Paperozi", sans-serif;
     font-size: clamp(50px, 6vw, 80px);
     line-height: 1.15;
     text-align: center;
@@ -86,15 +162,14 @@ body {
     transform-origin: center;
 
     transition:
-        transform
-        var(--animation-duration)
-        var(--animation-easing);
+        transform var(--animation-duration) var(--animation-easing);
 
     will-change: transform;
 }
 
 .group.open {
-    transform: translateX(calc(var(--card-size) / 2));
+    transform:
+        translateX(calc(var(--card-size) / 2));
 }
 
 .card-stage {
@@ -108,12 +183,12 @@ body {
     border: 0;
     border-radius: var(--card-radius);
 
-    background-color: #103D88;
+    overflow: visible;
+
+    background-color: #103d88;
 
     perspective: 1800px;
     perspective-origin: left center;
-
-    overflow: visible;
 
     cursor: pointer;
     outline: none;
@@ -121,7 +196,8 @@ body {
     transform-style: preserve-3d;
     -webkit-transform-style: preserve-3d;
 
-    box-shadow: 0 20px 45px rgba(0, 24, 84, 0.18);
+    box-shadow:
+        0 20px 45px rgba(0, 24, 84, 0.18);
 }
 
 .card-stage:focus-visible {
@@ -129,6 +205,10 @@ body {
         0 0 0 5px var(--point-yellow),
         0 20px 45px rgba(0, 24, 84, 0.22);
 }
+
+/* ========================================
+   한글 카드
+======================================== */
 
 .korean-card {
     position: absolute;
@@ -142,13 +222,14 @@ body {
 
     border-radius: var(--card-radius);
 
-    object-fit: cover;
-    object-position: center;
-
     pointer-events: none;
     user-select: none;
     -webkit-user-drag: none;
 }
+
+/* ========================================
+   영어 카드 문
+======================================== */
 
 .english-door {
     position: absolute;
@@ -161,19 +242,15 @@ body {
     border-radius: var(--card-radius);
 
     transform:
-        rotateY(0deg)
-        translateZ(1px);
+        rotateY(0deg) translateZ(1px);
+
     transform-origin: left center;
     transform-style: preserve-3d;
     -webkit-transform-style: preserve-3d;
 
     transition:
-        transform
-        var(--animation-duration)
-        var(--animation-easing),
-        box-shadow
-        var(--animation-duration)
-        var(--animation-easing);
+        transform var(--animation-duration) var(--animation-easing),
+        box-shadow var(--animation-duration) var(--animation-easing);
 
     will-change: transform;
 
@@ -184,14 +261,23 @@ body {
     position: absolute;
     inset: 0;
 
+    display: grid;
+    grid-template-rows:
+        auto 1fr auto;
+    align-items: center;
+
     width: 100%;
     height: 100%;
 
+    padding: 11.5% 8.5% 11%;
+
     border-radius: var(--card-radius);
 
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
+    color: #ffffff;
+    background-color: #0a64f5;
+
+    font-family: "Paperozi", sans-serif;
+    text-align: center;
 
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
@@ -199,28 +285,116 @@ body {
     pointer-events: none;
 }
 
+/* ========================================
+   카드 내부 내용
+======================================== */
+
+.card-face-content {
+    position: absolute;
+    inset: 0;
+
+    display: grid;
+    grid-template-rows:
+        auto 1fr auto;
+    align-items: center;
+
+    padding: 11.5% 8.5% 11%;
+
+    border-radius: var(--card-radius);
+
+    color: #ffffff;
+    background-color: #123b7d;
+
+    font-family: "Paperozi", sans-serif;
+    text-align: center;
+}
+
+.card-eyebrow {
+    align-self: start;
+
+    color: #ffffff;
+
+    font-size: clamp(10px,
+            calc(var(--card-size) * 0.034),
+            17px);
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.card-message {
+    align-self: center;
+
+    color: #ffffff;
+
+    font-family: "Paperozi", sans-serif;
+    font-size: clamp(22px,
+            calc(var(--card-size) * 0.065),
+            34px);
+    font-weight: 700;
+    line-height: 1.25;
+
+    /* 단어 단위 줄바꿈 */
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    text-wrap: balance;
+}
+
+/* 지정된 부분만 노란색 */
+.card-message span {
+    color: var(--point-yellow);
+}
+
+/* VOCA 전용 큰 글자 */
+.card-message.voca-message {
+    font-size: clamp(38px,
+            calc(var(--card-size) * 0.105),
+            56px);
+    font-weight: 600;
+}
+
+/* PATTERN 글자 크기 */
+.card-message.pattern-message {
+    font-size: clamp(22px,
+            calc(var(--card-size) * 0.065),
+            34px);
+}
+
+.card-footer {
+    align-self: end;
+
+    color: #ffffff;
+
+    font-size: clamp(10px,
+            calc(var(--card-size) * 0.034),
+            17px);
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+/* ========================================
+   카드 앞면과 뒷면
+======================================== */
+
 .door-front {
     z-index: 2;
 
     transform:
-        rotateY(0deg)
-        translateZ(0.6px);
+        rotateY(0deg) translateZ(0.6px);
 }
 
 .door-back {
     z-index: 1;
 
     transform:
-        rotateY(180deg)
-        translateZ(0.6px);
+        rotateY(180deg) translateZ(0.6px);
 }
 
 .group.open .english-door {
     transform:
-        rotateY(-180deg)
-        translateZ(1px);
+        rotateY(-180deg) translateZ(1px);
 
-    box-shadow: -18px 18px 30px rgba(0, 22, 85, 0.2);
+    box-shadow:
+        -18px 18px 30px rgba(0, 22, 85, 0.2);
 }
 
 /* ========================================
@@ -245,12 +419,15 @@ body {
 
     overflow-y: auto;
 
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    border:
+        1px solid rgba(255, 255, 255, 0.25);
     border-radius: 23px;
 
-    background-color: rgba(5, 43, 113, 0.88);
+    background-color:
+        rgba(5, 43, 113, 0.88);
 
-    box-shadow: 0 15px 35px rgba(0, 20, 70, 0.3);
+    box-shadow:
+        0 15px 35px rgba(0, 20, 70, 0.3);
 
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -270,15 +447,17 @@ body {
     align-items: center;
 
     width: 100%;
+
     gap: 7px;
 }
 
 .toc-title {
     margin-bottom: 3px;
 
-    color: rgba(255, 255, 255, 0.62);
+    color:
+        rgba(255, 255, 255, 0.62);
 
-    font-family: Arial, sans-serif;
+    font-family: "Paperozi", sans-serif;
     font-size: 9px;
     font-weight: 800;
     letter-spacing: 0.1em;
@@ -294,13 +473,15 @@ body {
 
     flex-shrink: 0;
 
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    border:
+        1px solid rgba(255, 255, 255, 0.25);
     border-radius: 11px;
 
-    color: #FFFFFF;
-    background-color: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    background-color:
+        rgba(255, 255, 255, 0.08);
 
-    font-family: Arial, sans-serif;
+    font-family: "Paperozi", sans-serif;
     font-size: 13px;
     font-weight: 800;
     text-decoration: none;
@@ -314,16 +495,18 @@ body {
 
 .mini-toc a:hover {
     color: var(--page-blue);
-    background-color: #FFFFFF;
-    border-color: #FFFFFF;
+    background-color: #ffffff;
+    border-color: #ffffff;
 
     transform: scale(1.08);
 }
 
 .mini-toc a.active {
     color: var(--page-blue);
-    background-color: var(--point-yellow);
-    border-color: var(--point-yellow);
+    background-color:
+        var(--point-yellow);
+    border-color:
+        var(--point-yellow);
 
     transform: scale(1.08);
 }
@@ -334,7 +517,8 @@ body {
 
     flex-shrink: 0;
 
-    background-color: rgba(255, 255, 255, 0.23);
+    background-color:
+        rgba(255, 255, 255, 0.23);
 }
 
 /* ========================================
@@ -343,12 +527,16 @@ body {
 
 @media (max-width: 1100px) {
     :root {
-        --card-size: min(43vw, 500px);
+        --card-size:
+            min(43vw, 500px);
     }
 
     .title {
-        padding: 0 100px 0 25px;
-        font-size: clamp(48px, 7vw, 65px);
+        padding:
+            0 100px 0 25px;
+
+        font-size:
+            clamp(48px, 7vw, 65px);
     }
 
     .mini-toc {
@@ -358,7 +546,8 @@ body {
 
 @media (max-width: 700px) {
     :root {
-        --card-size: min(70vw, 500px);
+        --card-size:
+            min(70vw, 500px);
     }
 
     body {
@@ -367,7 +556,9 @@ body {
 
     .title {
         margin-top: 25px;
-        padding: 0 70px 0 14px;
+        padding:
+            0 70px 0 14px;
+
         font-size: 42px;
     }
 
@@ -377,8 +568,7 @@ body {
 
     .group.open {
         transform:
-            translateX(calc(var(--card-size) / 2))
-            scale(0.88);
+            translateX(calc(var(--card-size) / 2)) scale(0.88);
     }
 
     .mini-toc {
@@ -408,9 +598,9 @@ body {
     }
 }
 
+
 /* ========================================
    단일 플래시카드 페이지
-   <body class="flashcard-page"> 전용
 ======================================== */
 
 body.flashcard-page {
@@ -424,26 +614,6 @@ body.flashcard-page {
     overflow: hidden;
 }
 
-/* 카드 위 중앙 타이틀 */
-.flashcard-page .title {
-    position: absolute;
-    top: calc(50% - (var(--card-size) / 2) - 145px);
-    left: 50%;
-    z-index: 20;
-
-    width: max-content;
-    max-width: calc(100% - 32px);
-
-    margin: 0;
-    padding: 0;
-
-    font-size: clamp(42px, 5.4vw, 72px);
-    text-align: center;
-    white-space: nowrap;
-
-    transform: translateX(-50%);
-}
-
 /* 플래시카드 작업 영역 */
 .flashcard-page .flashcard-workspace {
     position: relative;
@@ -455,7 +625,7 @@ body.flashcard-page {
     padding: 0;
 }
 
-/* 닫힌 카드를 화면 정중앙에 배치 */
+/* 닫힌 카드를 화면 중앙에 배치 */
 .flashcard-page .card-list {
     position: absolute;
     top: 50%;
@@ -466,7 +636,8 @@ body.flashcard-page {
     width: var(--card-size);
     margin: 0;
 
-    transform: translate(-50%, -50%);
+    transform:
+        translate(-50%, -50%);
 }
 
 .flashcard-page .group {
@@ -477,18 +648,20 @@ body.flashcard-page {
     margin: 0;
 }
 
-/* 키보드 이동 후 노란 포커스 테두리 제거 */
+/* 카드 포커스 테두리 */
 .flashcard-page .card-stage:focus,
 .flashcard-page .card-stage:focus-visible {
     outline: none;
 
-    box-shadow: 0 20px 45px rgba(0, 24, 84, 0.18);
+    box-shadow:
+        0 20px 45px rgba(0, 24, 84, 0.18);
 }
 
 /* 카드 하단 네비게이터 영역 */
 .flashcard-page .card-navigation {
     position: absolute;
-    top: calc(50% + (var(--card-size) / 2) + 80px);
+    top:
+        calc(50% + (var(--card-size) / 2) + 80px);
     left: 50%;
 
     display: block;
@@ -501,7 +674,7 @@ body.flashcard-page {
     transform: translateX(-50%);
 }
 
-/* 플래시카드 가로 네비게이터 */
+/* 가로 네비게이터 */
 .flashcard-page .mini-toc.horizontal-toc {
     position: static;
     top: auto;
@@ -544,6 +717,7 @@ body.flashcard-page {
     justify-content: center;
 
     width: auto;
+
     gap: 6px;
 }
 
@@ -572,10 +746,14 @@ body.flashcard-page {
     font-size: 12px;
 }
 
-/* 키보드 안내 */
+/* ========================================
+   키보드 안내
+======================================== */
+
 .flashcard-page .keyboard-hint {
     position: absolute;
-    top: calc(50% + (var(--card-size) / 2) + 154px);
+    top:
+        calc(50% + (var(--card-size) / 2) + 154px);
     left: 50%;
 
     width: max-content;
@@ -583,9 +761,10 @@ body.flashcard-page {
 
     margin: 0;
 
-    color: rgba(255, 255, 255, 0.38);
+    color:
+        rgba(255, 255, 255, 0.38);
 
-    font-family: Arial, sans-serif;
+    font-family: "Paperozi", sans-serif;
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.09em;
@@ -599,43 +778,156 @@ body.flashcard-page {
     display: inline-block;
 
     min-width: 24px;
+
     margin: 0 3px;
     padding: 3px 7px;
 
-    border: 1px solid rgba(255, 255, 255, 0.19);
+    border:
+        1px solid rgba(255, 255, 255, 0.19);
     border-radius: 6px;
 
-    color: rgba(255, 255, 255, 0.7);
-    background-color: rgba(255, 255, 255, 0.07);
+    color:
+        rgba(255, 255, 255, 0.7);
+    background-color:
+        rgba(255, 255, 255, 0.07);
 
     font: inherit;
 }
 
-/* 세로 길이가 짧은 데스크톱 */
+/* ========================================
+   상단 중앙 학습 경로
+======================================== */
+
+.flashcard-page .course-breadcrumb {
+    position: absolute;
+    top:
+        calc(50% - (var(--card-size) / 2) - 112px);
+    left: 50%;
+    z-index: 100;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+    padding: 8px 10px;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 16px;
+
+    background-color:
+        rgba(5, 43, 113, 0.88);
+
+    box-shadow:
+        0 15px 35px rgba(0, 20, 70, 0.3);
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    transform: translateX(-50%);
+}
+
+.flashcard-page .course-breadcrumb a,
+.flashcard-page .breadcrumb-current {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 34px;
+    padding: 0 12px;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 10px;
+
+    color: #ffffff;
+    background-color:
+        rgba(255, 255, 255, 0.08);
+
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0;
+    line-height: 1;
+    text-decoration: none;
+
+    transition:
+        color 0.25s ease,
+        background-color 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.flashcard-page .course-breadcrumb a:hover {
+    color: var(--page-blue);
+    background-color: #ffffff;
+    border-color: #ffffff;
+
+    transform: scale(1.04);
+}
+
+.flashcard-page .breadcrumb-current {
+    color: var(--page-blue);
+    background-color:
+        var(--point-yellow);
+    border-color:
+        var(--point-yellow);
+}
+
+/* 화살표 대신 하단과 같은 세로 구분선 */
+.flashcard-page .breadcrumb-separator {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: auto;
+    height: 32px;
+
+    overflow: visible;
+
+    color:
+        rgba(255, 255, 255, 0.45);
+    background-color: transparent;
+
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+/* ========================================
+   세로 길이가 짧은 데스크톱
+======================================== */
+
 @media (max-height: 820px) and (min-width: 701px) {
     body.flashcard-page {
-        --card-size: min(46vh, 500px);
+        --card-size:
+            min(46vh, 500px);
     }
 
-    .flashcard-page .title {
-        top: calc(50% - (var(--card-size) / 2) - 88px);
-
-        font-size: clamp(36px, 5vw, 58px);
+    .flashcard-page .course-breadcrumb {
+        top:
+            calc(50% - (var(--card-size) / 2) - 72px);
     }
 
     .flashcard-page .card-navigation {
-        top: calc(50% + (var(--card-size) / 2) + 40px);
+        top:
+            calc(50% + (var(--card-size) / 2) + 40px);
     }
 
     .flashcard-page .keyboard-hint {
-        top: calc(50% + (var(--card-size) / 2) + 108px);
+        top:
+            calc(50% + (var(--card-size) / 2) + 108px);
     }
 }
 
-/* 플래시카드 모바일 */
+/* ========================================
+   플래시카드 모바일
+======================================== */
+
 @media (max-width: 700px) {
     body.flashcard-page {
-        --card-size: min(62vw, 360px);
+        --card-size:
+            min(62vw, 360px);
 
         min-height: 100svh;
 
@@ -647,36 +939,61 @@ body.flashcard-page {
         min-height: 100svh;
     }
 
-    .flashcard-page .title {
-        top: calc(50% - (var(--card-size) / 2) - 82px);
+    .flashcard-page .course-breadcrumb {
+        top:
+            calc(50% - (var(--card-size) / 2) - 68px);
 
-        width: max-content;
-        max-width: calc(100% - 24px);
+        max-width:
+            calc(100% - 20px);
 
-        margin: 0;
-        padding: 0;
+        gap: 8px;
+        padding: 10px 12px;
 
-        font-size: 38px;
-        text-align: center;
-        white-space: normal;
+        border-radius: 14px;
 
-        transform: translateX(-50%);
+        white-space: nowrap;
+    }
+
+    .flashcard-page .course-breadcrumb a,
+    .flashcard-page .breadcrumb-current {
+        width: auto;
+        height: 30px;
+        min-height: 0;
+
+        padding: 0 8px;
+
+        border-radius: 9px;
+
+        font-size: 10px;
+    }
+
+    .flashcard-page .breadcrumb-separator {
+        width: auto;
+        height: 28px;
+
+        font-size: 13px;
     }
 
     .flashcard-page .card-navigation {
-        top: calc(50% + (var(--card-size) / 2) + 42px);
+        top:
+            calc(50% + (var(--card-size) / 2) + 42px);
 
-        max-width: calc(100% - 16px);
+        max-width:
+            calc(100% - 16px);
     }
 
-    /* VOCA / PATTERN 네비게이터를 두 줄로 배치 */
+    /*
+     * 모바일에서는 VOCA와 PATTERN
+     * 네비게이터를 두 줄로 배치합니다.
+     */
     .flashcard-page .mini-toc.horizontal-toc {
         flex-direction: column;
         align-items: center;
         justify-content: center;
 
         width: max-content;
-        max-width: calc(100vw - 24px);
+        max-width:
+            calc(100vw - 24px);
 
         gap: 8px;
         padding: 10px 12px;
@@ -691,6 +1008,7 @@ body.flashcard-page {
         justify-content: center;
 
         width: max-content;
+
         gap: 6px;
     }
 
@@ -709,7 +1027,8 @@ body.flashcard-page {
     }
 
     .flashcard-page .keyboard-hint {
-        top: calc(50% + (var(--card-size) / 2) + 148px);
+        top:
+            calc(50% + (var(--card-size) / 2) + 148px);
     }
 }
 
@@ -725,7 +1044,214 @@ body.flashcard-page {
     .group,
     .english-door,
     .mini-toc a {
-        transition-duration: 0.01ms !important;
-        transition-delay: 0s !important;
+        transition-duration:
+            0.01ms !important;
+        transition-delay:
+            0s !important;
+    }
+}
+
+/* ========================================
+   세부 수업 바로가기 메뉴
+======================================== */
+
+.flashcard-page .lesson-switcher {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+}
+
+/* 현재 수업 버튼 */
+.flashcard-page .lesson-switcher .breadcrumb-current {
+    gap: 8px;
+
+    margin: 0;
+
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+/* 아래쪽 화살표 */
+.flashcard-page .lesson-switcher-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    color:
+        rgba(8, 70, 176, 0.65);
+
+    font-size: 10px;
+
+    transition:
+        transform 0.25s ease;
+}
+
+/* 드롭다운 영역 */
+.flashcard-page .lesson-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    z-index: 200;
+
+    display: flex;
+    flex-direction: column;
+
+    width: max-content;
+    min-width: 250px;
+
+    gap: 6px;
+    padding: 8px;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 16px;
+
+    background-color:
+        rgba(5, 43, 113, 0.96);
+
+    box-shadow:
+        0 15px 35px rgba(0, 20, 70, 0.3);
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transform:
+        translateY(-7px);
+
+    transition:
+        opacity 0.2s ease,
+        visibility 0.2s ease,
+        transform 0.2s ease;
+}
+
+/*
+ * 상단 버튼과 드롭다운 사이의 빈 공간에서도
+ * 메뉴가 닫히지 않게 연결 영역을 만듭니다.
+ */
+.flashcard-page .lesson-dropdown::before {
+    content: "";
+
+    position: absolute;
+    right: 0;
+    bottom: 100%;
+
+    width: 100%;
+    height: 11px;
+}
+
+/* 마우스 오버 또는 키보드 포커스 */
+.flashcard-page .lesson-switcher:hover .lesson-dropdown,
+.flashcard-page .lesson-switcher:focus-within .lesson-dropdown {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+
+    transform:
+        translateY(0);
+}
+
+.flashcard-page .lesson-switcher:hover .lesson-switcher-arrow,
+.flashcard-page .lesson-switcher:focus-within .lesson-switcher-arrow {
+    transform:
+        rotate(180deg);
+}
+
+/* 드롭다운 바로가기 버튼 */
+.flashcard-page .lesson-dropdown a {
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    align-items: center;
+
+    width: 100%;
+    height: 42px;
+
+    gap: 10px;
+    padding: 0 12px;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 10px;
+
+    color: #ffffff;
+    background-color:
+        rgba(255, 255, 255, 0.07);
+
+    font-size: 12px;
+    font-weight: 700;
+    text-align: left;
+    text-decoration: none;
+    white-space: nowrap;
+
+    transform: none;
+
+    transition:
+        color 0.2s ease,
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.flashcard-page .lesson-dropdown a:hover,
+.flashcard-page .lesson-dropdown a:focus-visible {
+    color: var(--page-blue);
+    background-color: #ffffff;
+    border-color: #ffffff;
+
+    outline: none;
+
+    transform:
+        translateX(3px);
+}
+
+/* 수업 번호 */
+.flashcard-page .lesson-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 33px;
+    height: 28px;
+
+    border-radius: 8px;
+
+    color: var(--page-blue);
+    background-color:
+        var(--point-yellow);
+
+    font-size: 12px;
+    font-weight: 800;
+    margin-right: 15px;
+}
+
+@media (max-width: 700px) {
+    .flashcard-page .lesson-switcher .breadcrumb-current {
+        gap: 5px;
+    }
+
+    .flashcard-page .lesson-dropdown {
+        right: 0;
+
+        min-width: 220px;
+        max-width:
+            calc(100vw - 24px);
+    }
+
+    .flashcard-page .lesson-dropdown a {
+        height: 38px;
+
+        font-size: 10px;
+    }
+
+    .flashcard-page .lesson-number {
+        width: 25px;
+        height: 25px;
+
+        font-size: 10px;
     }
 }

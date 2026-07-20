@@ -1510,10 +1510,11 @@ body.flashcard-page {
 
 body,
 body.flashcard-page {
-    background-color: #001d69;
+    background-color: #001443;
     background-image:
-        radial-gradient(circle at 0% 0%, rgba(27, 73, 188, 0.24) 0%, rgba(20, 55, 145, 0.10) 24%, rgba(20, 55, 145, 0) 45%),
-        linear-gradient(145deg, #0032b2 0%, #002992 46%, #001447 100%);
+        radial-gradient(circle at 0% 0%, rgba(12, 43, 125, 0.22) 0%, rgba(10, 35, 102, 0.10) 24%, rgba(10, 35, 102, 0) 43%),
+        linear-gradient(145deg, #00277f 0%, #00216f 46%, #000f36 100%);
+    background-attachment: fixed;
 }
 
 .card-stage {
@@ -1593,4 +1594,14 @@ body.flashcard-page {
 .flashcard-page .lesson-number {
     color: rgba(255, 255, 255, 0.78);
     background-color: rgba(255, 255, 255, 0.09);
+}
+
+
+/* Deployment-safe final background override */
+html body.flashcard-page {
+    background-color: #001443 !important;
+    background-image:
+        radial-gradient(circle at 0% 0%, rgba(12, 43, 125, 0.22) 0%, rgba(10, 35, 102, 0.10) 24%, rgba(10, 35, 102, 0) 43%),
+        linear-gradient(145deg, #00277f 0%, #00216f 46%, #000f36 100%) !important;
+    background-attachment: fixed !important;
 }

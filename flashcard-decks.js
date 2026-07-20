@@ -58,10 +58,8 @@
      * 이미지 없이 영문과 한글 텍스트만으로
      * 플래시카드 덱을 생성합니다.
      *
-     * 세 번째 값은 강조할 문자열입니다.
-     * 여러 단어를 강조해야 할 때 배열을 넣어도
-     * 기존 렌더러가 오류 없이 동작하도록 첫 번째 값을
-     * highlightText 문자열로 전달합니다.
+     * 각 카드의 세 번째 값에는 강조할 문자열 또는
+     * 여러 강조어가 담긴 배열을 넣을 수 있습니다.
      */
     function createTextDeck(
         topic,
@@ -75,59 +73,38 @@
             items,
             section
         ) => items.map(
-            (item, index) => {
-                const [
+            (
+                [
                     frontText,
                     backText,
-                    rawHighlightText
-                ] = item;
+                    highlightText
+                ],
+                index
+            ) => ({
+                id:
+                    `${section.toLowerCase()}${index + 1}`,
 
-                const highlightTexts = Array.isArray(rawHighlightText)
-                    ? rawHighlightText.filter(
-                        (value) =>
-                            typeof value === "string" &&
-                            value.trim() !== ""
-                    )
-                    : (
-                        typeof rawHighlightText === "string" &&
-                        rawHighlightText.trim() !== ""
-                            ? [rawHighlightText]
-                            : []
-                    );
+                label:
+                    `${section === "VOCA"
+                        ? "Voca"
+                        : "Pattern"} ${index + 1}`,
 
-                return {
-                    id:
-                        `${section.toLowerCase()}${index + 1}`,
+                section,
 
-                    label:
-                        `${section === "VOCA"
-                            ? "Voca"
-                            : "Pattern"} ${index + 1}`,
+                eyebrow:
+                    `${topic.toUpperCase()} - ${section}`,
 
-                    section,
+                frontText,
+                backText,
 
-                    eyebrow:
-                        `${topic.toUpperCase()} - ${section}`,
+                /*
+                 * 문자열과 배열을 변환하지 않고 그대로 전달합니다.
+                 */
+                highlightText:
+                    highlightText || "",
 
-                    frontText,
-                    backText,
-
-                    /*
-                     * 기존 렌더러 호환을 위해
-                     * highlightText에는 문자열만 전달합니다.
-                     */
-                    highlightText:
-                        highlightTexts[0] || "",
-
-                    /*
-                     * 여러 부분을 강조하는 렌더러에서 사용할 수 있도록
-                     * 전체 강조값도 배열로 보존합니다.
-                     */
-                    highlightTexts,
-
-                    footer
-                };
-            }
+                footer
+            })
         );
 
         return [
@@ -787,7 +764,8 @@
                         "The circle is more vivid than the square.",
                         "원이 사각형보다 더 선명합니다.",
                         [
-                            "circle"
+                            "circle",
+                            "square"
                         ]
                     ]
                 ]

@@ -1735,3 +1735,89 @@ body.flashcard-page {
 .flashcard-page .lesson-switcher-arrow {
     color: rgba(255, 255, 255, 0.36) !important;
 }
+
+
+/* ========================================
+   background + shadow tone match
+   1번 레퍼런스 기준
+======================================== */
+
+:root {
+    --page-blue: #0038d8;
+    --page-blue-top: #0047f4;
+    --page-blue-mid: #0039d0;
+    --page-blue-bottom: #00238f;
+
+    --flashcard-front-blue: #0a47f4;
+    --flashcard-back-blue: #07358a;
+
+    --card-shadow:
+        0 24px 44px rgba(0, 17, 78, 0.24),
+        0 10px 22px rgba(0, 12, 60, 0.14);
+
+    --card-open-shadow:
+        -18px 18px 30px rgba(0, 22, 85, 0.16);
+}
+
+/* 전체 배경: 1번처럼 더 밝은 블루 계열 */
+html,
+body,
+body.flashcard-page {
+    background-color: #0038d8 !important;
+    background-image:
+        radial-gradient(
+            circle at 0% 0%,
+            rgba(106, 154, 255, 0.16) 0%,
+            rgba(67, 118, 255, 0.10) 20%,
+            rgba(28, 79, 234, 0.05) 36%,
+            rgba(0, 56, 216, 0) 54%
+        ),
+        linear-gradient(
+            180deg,
+            #0047f4 0%,
+            #003edc 42%,
+            #0033c1 68%,
+            #00238f 100%
+        ) !important;
+    background-attachment: fixed !important;
+}
+
+/* 카드 뒤 배경 */
+.card-stage,
+.flashcard-page .card-stage {
+    background-color: var(--flashcard-back-blue) !important;
+    box-shadow: var(--card-shadow) !important;
+}
+
+/* 카드 앞면 */
+.door-face,
+.door-front {
+    background-color: var(--flashcard-front-blue) !important;
+}
+
+/* 카드 안쪽 */
+.card-face-content {
+    background-color: var(--flashcard-back-blue) !important;
+}
+
+/* 포커스 시 그림자 */
+.card-stage:focus-visible,
+.flashcard-page .card-stage:focus,
+.flashcard-page .card-stage:focus-visible {
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.14),
+        0 24px 44px rgba(0, 17, 78, 0.24),
+        0 10px 22px rgba(0, 12, 60, 0.14) !important;
+}
+
+/* 카드 열렸을 때 그림자 */
+.group.open .english-door {
+    box-shadow: var(--card-open-shadow) !important;
+}
+
+/* 하단 네비 영역 그림자 톤도 같이 정리 */
+.flashcard-page .mini-toc.horizontal-toc,
+.flashcard-page .lesson-dropdown,
+.mini-toc {
+    box-shadow: 0 12px 24px rgba(0, 18, 74, 0.14) !important;
+}

@@ -732,7 +732,7 @@
                     ["chroma", "채도"],
                     ["saturation", "채도"],
                     ["vivid", "선명한"],
-                    ["intense", "강렬한"]
+                    ["intense", "강렬한"],
                     ["muted", "탁한"],
                     ["dull", "흐린"]
                 ],

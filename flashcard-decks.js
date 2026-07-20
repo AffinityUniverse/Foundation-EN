@@ -766,8 +766,9 @@
                     [
                         "The circle is more vivid than the square.",
                         "원이 사각형보다 더 선명합니다.",
+                        [
                         "circle",
-                        "square"
+                        "square"]
                     ]
                 ]
             )

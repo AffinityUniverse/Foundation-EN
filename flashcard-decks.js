@@ -57,6 +57,11 @@
     /*
      * 이미지 없이 영문과 한글 텍스트만으로
      * 플래시카드 덱을 생성합니다.
+     *
+     * 세 번째 값은 강조할 문자열입니다.
+     * 여러 단어를 강조해야 할 때 배열을 넣어도
+     * 기존 렌더러가 오류 없이 동작하도록 첫 번째 값을
+     * highlightText 문자열로 전달합니다.
      */
     function createTextDeck(
         topic,
@@ -70,86 +75,59 @@
             items,
             section
         ) => items.map(
-            (
-                [
+            (item, index) => {
+                const [
                     frontText,
                     backText,
-                    highlightText
-                ],
-                index
-            ) => ({
-                id:
-                    `${section.toLowerCase()}${index + 1}`,
+                    rawHighlightText
+                ] = item;
 
-                label:
-                    `${section === "VOCA"
-                        ? "Voca"
-                        : "Pattern"} ${index + 1}`,
+                const highlightTexts = Array.isArray(rawHighlightText)
+                    ? rawHighlightText.filter(
+                        (value) =>
+                            typeof value === "string" &&
+                            value.trim() !== ""
+                    )
+                    : (
+                        typeof rawHighlightText === "string" &&
+                        rawHighlightText.trim() !== ""
+                            ? [rawHighlightText]
+                            : []
+                    );
 
-                section,
+                return {
+                    id:
+                        `${section.toLowerCase()}${index + 1}`,
 
-                eyebrow:
-                    `${topic.toUpperCase()} - ${section}`,
+                    label:
+                        `${section === "VOCA"
+                            ? "Voca"
+                            : "Pattern"} ${index + 1}`,
 
-                frontText,
-                backText,
+                    section,
 
-                highlightText:
-                    highlightText || frontText,
+                    eyebrow:
+                        `${topic.toUpperCase()} - ${section}`,
 
-                footer
-            })
-        );
-
-        return [
-            ...makeCards(voca, "VOCA"),
-            ...makeCards(patterns, "PATTERN")
-        ];
-    } function createTextDeck(
-        topic,
-        voca,
-        patterns
-    ) {
-        const footer =
-            "@ AFFINITY UNIVERSE";
-
-        const makeCards = (
-            items,
-            section
-        ) => items.map(
-            (
-                [
                     frontText,
                     backText,
-                    highlightText
-                ],
-                index
-            ) => ({
-                id:
-                    `${section.toLowerCase()}${index + 1}`,
 
-                label:
-                    `${section === "VOCA"
-                        ? "Voca"
-                        : "Pattern"} ${index + 1}`,
+                    /*
+                     * 기존 렌더러 호환을 위해
+                     * highlightText에는 문자열만 전달합니다.
+                     */
+                    highlightText:
+                        highlightTexts[0] || "",
 
-                section,
+                    /*
+                     * 여러 부분을 강조하는 렌더러에서 사용할 수 있도록
+                     * 전체 강조값도 배열로 보존합니다.
+                     */
+                    highlightTexts,
 
-                eyebrow:
-                    `${topic.toUpperCase()} - ${section}`,
-
-                frontText,
-                backText,
-
-                /*
-                 * 세 번째 값이 지정된 카드만
-                 * 노란색으로 강조됩니다.
-                 */
-                highlightText:
-                    highlightText || "",
-
-                footer
-            })
+                    footer
+                };
+            }
         );
 
         return [
@@ -161,7 +139,6 @@
     window.FLASHCARD_DECKS = {
         /* ========================================
            FD01 · Class Communication
-           기존 이미지형 덱
         ======================================== */
 
         "fd01-1": {
@@ -669,6 +646,11 @@
                 ]
             )
         },
+
+        /* ========================================
+           FD03-1 · Value
+        ======================================== */
+
         "fd03-1": {
             title: "Value",
             highlight: "(Lightness)",
@@ -677,11 +659,26 @@
                 "Value",
 
                 [
-                    ["value", "명도"],
-                    ["light", "밝은, 연한"],
-                    ["dark", "어두운"],
-                    ["bright", "밝고 빛나는"],
-                    ["calm", "차분한"]
+                    [
+                        "value",
+                        "명도"
+                    ],
+                    [
+                        "light",
+                        "밝은, 연한"
+                    ],
+                    [
+                        "dark",
+                        "어두운"
+                    ],
+                    [
+                        "bright",
+                        "밝고 빛나는"
+                    ],
+                    [
+                        "calm",
+                        "차분한"
+                    ]
                 ],
 
                 [
@@ -714,12 +711,18 @@
                         "The rectangle is brighter than the triangle.",
                         "사각형이 삼각형보다 더 밝습니다.",
                         [
-                        "rectangle",
-                            ]
+                            "rectangle",
+                            "triangle"
+                        ]
                     ]
                 ]
             )
         },
+
+        /* ========================================
+           FD03-2 · Chroma
+        ======================================== */
+
         "fd03-2": {
             title: "",
             highlight: "Chroma",
@@ -728,12 +731,30 @@
                 "Chroma",
 
                 [
-                    ["chroma", "채도"],
-                    ["saturation", "채도"],
-                    ["vivid", "선명한"],
-                    ["intense", "강렬한"],
-                    ["muted", "탁한"],
-                    ["dull", "흐린"]
+                    [
+                        "chroma",
+                        "채도"
+                    ],
+                    [
+                        "saturation",
+                        "채도"
+                    ],
+                    [
+                        "vivid",
+                        "선명한"
+                    ],
+                    [
+                        "intense",
+                        "강렬한"
+                    ],
+                    [
+                        "muted",
+                        "탁한"
+                    ],
+                    [
+                        "dull",
+                        "흐린"
+                    ]
                 ],
 
                 [
@@ -766,11 +787,18 @@
                         "The circle is more vivid than the square.",
                         "원이 사각형보다 더 선명합니다.",
                         [
-                        "circle",
+                            "circle",
+                            "square"
+                        ]
                     ]
                 ]
             )
         },
+
+        /* ========================================
+           FD03-3 · Color Temperature
+        ======================================== */
+
         "fd03-3": {
             title: "Color",
             highlight: "Temperature",
@@ -779,10 +807,22 @@
                 "Color Temperature",
 
                 [
-                    ["temperature", "온도"],
-                    ["warm", "따뜻한"],
-                    ["cool", "차가운"],
-                    ["neutral", "중립적인"]
+                    [
+                        "temperature",
+                        "온도"
+                    ],
+                    [
+                        "warm",
+                        "따뜻한"
+                    ],
+                    [
+                        "cool",
+                        "차가운"
+                    ],
+                    [
+                        "neutral",
+                        "중립적인"
+                    ]
                 ],
 
                 [
@@ -824,6 +864,11 @@
                 ]
             )
         },
+
+        /* ========================================
+           FD03-4 · Contrast
+        ======================================== */
+
         "fd03-4": {
             title: "",
             highlight: "Contrast",
@@ -832,10 +877,22 @@
                 "Contrast",
 
                 [
-                    ["contrast", "대비"],
-                    ["stand out", "돋보이다"],
-                    ["similar", "비슷하다"],
-                    ["subtle", "은은한"]
+                    [
+                        "contrast",
+                        "대비"
+                    ],
+                    [
+                        "stand out",
+                        "돋보이다"
+                    ],
+                    [
+                        "similar",
+                        "비슷하다"
+                    ],
+                    [
+                        "subtle",
+                        "은은한"
+                    ]
                 ],
 
                 [
@@ -857,7 +914,10 @@
                     [
                         "This yellow circle and blue square have high contrast.",
                         "이 노란 원과 파란 사각형은 대비가 강합니다.",
-                        "circle",
+                        [
+                            "circle",
+                            "square"
+                        ]
                     ],
                     [
                         "These two greens have low contrast.",
@@ -866,48 +926,48 @@
                     ]
                 ]
             )
-        } /* 중괄호 바로 다음에 콤마(,) 1개 넣기*/
+        }
 
         /* ========================================
            FD 4강 자료 붙여넣기👇
         ======================================== */
 
-        
+
         /* ========================================
            FD 5강 자료 붙여넣기👇
         ======================================== */
 
-        
+
         /* ========================================
            FD 6강 자료 붙여넣기👇
         ======================================== */
 
-        
+
         /* ========================================
            FD 7강 자료 붙여넣기👇
         ======================================== */
-        
-        
+
+
         /* ========================================
            FD 8강 자료 붙여넣기👇
         ======================================== */
 
-        
+
         /* ========================================
            FD 9강 자료 붙여넣기👇
         ======================================== */
-        
-        
+
+
         /* ========================================
            FD 10강 자료 붙여넣기👇
         ======================================== */
-        
-        
+
+
         /* ========================================
            FD 11강 자료 붙여넣기👇
         ======================================== */
-        
-        
+
+
         /* ========================================
            FD 12강 자료 붙여넣기👇
         ======================================== */

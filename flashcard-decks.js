@@ -678,10 +678,9 @@
 
                 [
                     ["value", "명도"],
-                    ["light", "밝은"],
+                    ["light", "밝은, 연한"],
                     ["dark", "어두운"],
                     ["bright", "밝고 빛나는"],
-                    ["vibrant", "생생한"],
                     ["calm", "차분한"]
                 ],
 
@@ -702,19 +701,20 @@
                         "Low value"
                     ],
                     [
-                        "My circle is high value. It feels bright and vibrant.",
-                        "내 원은 명도가 높아요. 밝고 생생하게 느껴집니다.",
-                        "bright"
+                        "My circle is high value. It feels bright.",
+                        "내 원은 명도가 높아요. 밝고 환하게 느껴집니다.",
+                        "circle"
                     ],
                     [
                         "This star is low value. It feels dark and calm.",
                         "이 별은 명도가 낮아요. 어둡고 차분하게 느껴집니다.",
-                        "dark"
+                        "star"
                     ],
                     [
                         "The rectangle is brighter than the triangle.",
                         "사각형이 삼각형보다 더 밝습니다.",
-                        "brighter"
+                        "rectangle",
+                        "triangle"
                     ]
                 ]
             )
@@ -730,6 +730,7 @@
                     ["chroma", "채도"],
                     ["saturation", "채도"],
                     ["vivid", "선명한"],
+                    ["intense", "강렬한"]
                     ["muted", "탁한"],
                     ["dull", "흐린"]
                 ],
@@ -753,17 +754,18 @@
                     [
                         "My heart is high chroma. It looks vivid and strong.",
                         "내 하트는 채도가 높아요. 선명하고 강하게 보여요.",
-                        "vivid"
+                        "heart"
                     ],
                     [
                         "This triangle is low chroma. It feels muted and soft.",
                         "이 삼각형은 채도가 낮아요. 탁하고 부드럽게 느껴집니다.",
-                        "muted"
+                        "triangle"
                     ],
                     [
                         "The circle is more vivid than the square.",
                         "원이 사각형보다 더 선명합니다.",
-                        "more vivid"
+                        "circle",
+                        "square"
                     ]
                 ]
             )
@@ -804,13 +806,13 @@
                         "depending on"
                     ],
                     [
-                        "Red feels warm.",
-                        "빨강은 따뜻하게 느껴집니다.",
+                        "Red usually feels warm.",
+                        "빨강은 일반적으로 따뜻하게 느껴집니다.",
                         "warm"
                     ],
                     [
-                        "Blue feels cool.",
-                        "파랑은 차갑게 느껴집니다.",
+                        "Blue usually feels cool.",
+                        "파랑은 일반적으로 차갑게 느껴집니다.",
                         "cool"
                     ],
                     [
@@ -842,19 +844,20 @@
                         "Contrast"
                     ],
                     [
-                        "High contrast means the colors stand out strongly.",
+                        "High contrast makes the colors stand out strongly.",
                         "대비가 강하면 색이 뚜렷하게 돋보입니다.",
                         "stand out"
                     ],
                     [
-                        "Low contrast means the colors look similar and subtle.",
+                        "Low contrast makes the colors look similar and subtle.",
                         "대비가 약하면 색이 비슷하고 은은하게 보입니다.",
                         "subtle"
                     ],
                     [
                         "This yellow circle and blue square have high contrast.",
                         "이 노란 원과 파란 사각형은 대비가 강합니다.",
-                        "high contrast"
+                        "circle",
+                        "square"
                     ],
                     [
                         "These two greens have low contrast.",

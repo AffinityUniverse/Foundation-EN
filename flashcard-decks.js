@@ -715,7 +715,6 @@
                         "사각형이 삼각형보다 더 밝습니다.",
                         [
                         "rectangle",
-                        "triangle"
                             ]
                     ]
                 ]
@@ -768,7 +767,6 @@
                         "원이 사각형보다 더 선명합니다.",
                         [
                         "circle",
-                        "square"]
                     ]
                 ]
             )
@@ -860,7 +858,6 @@
                         "This yellow circle and blue square have high contrast.",
                         "이 노란 원과 파란 사각형은 대비가 강합니다.",
                         "circle",
-                        "square"
                     ],
                     [
                         "These two greens have low contrast.",

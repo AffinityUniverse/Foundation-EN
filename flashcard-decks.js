@@ -62,56 +62,57 @@
      * 여러 강조어가 담긴 배열을 넣을 수 있습니다.
      */
     function createTextDeck(
-        topic,
-        voca,
-        patterns
-    ) {
-        const footer =
-            "@ AFFINITY UNIVERSE";
+    topic,
+    voca,
+    patterns
+) {
+    const footer =
+        "@ AFFINITY UNIVERSE";
 
-        const makeCards = (
-            items,
-            section
-        ) => items.map(
-            (
-                [
-                    frontText,
-                    backText,
-                    highlightText
-                ],
-                index
-            ) => ({
-                id:
-                    `${section.toLowerCase()}${index + 1}`,
-
-                label:
-                    `${section === "VOCA"
-                        ? "Voca"
-                        : "Pattern"} ${index + 1}`,
-
-                section,
-
-                eyebrow:
-                    `${topic.toUpperCase()} - ${section}`,
-
+    const makeCards = (
+        items,
+        section
+    ) => items.map(
+        (
+            [
                 frontText,
                 backText,
+                highlightText
+            ],
+            index
+        ) => ({
+            id:
+                `${section.toLowerCase()}${index + 1}`,
 
-                /*
-                 * 문자열과 배열을 변환하지 않고 그대로 전달합니다.
-                 */
-                highlightText:
-                    highlightText || "",
+            label:
+                `${section === "VOCA"
+                    ? "Voca"
+                    : "Pattern"} ${index + 1}`,
 
-                footer
-            })
-        );
+            section,
 
-        return [
-            ...makeCards(voca, "VOCA"),
-            ...makeCards(patterns, "PATTERN")
-        ];
-    }
+            eyebrow:
+                `${topic.toUpperCase()} - ${section}`,
+
+            frontText,
+            backText,
+
+            /*
+             * 문자열이면 문자열 그대로,
+             * 배열이면 배열 그대로 전달합니다.
+             */
+            highlightText:
+                highlightText || "",
+
+            footer
+        })
+    );
+
+    return [
+        ...makeCards(voca, "VOCA"),
+        ...makeCards(patterns, "PATTERN")
+    ];
+}
 
     window.FLASHCARD_DECKS = {
         /* ========================================

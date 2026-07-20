@@ -1957,8 +1957,7 @@ html body.flashcard-page {
 .door-face,
 .door-front,
 .door-back,
-.card-face-content,
-.korean-card {
+.card-face-content {
     background-color: #0a47f4 !important;
 }
 

@@ -686,7 +686,7 @@
                         "star"
                     ],
                     [
-                        "The rectangle is brighter than the triangle.",
+                        "The rectangle is lighter than the triangle.",
                         "사각형이 삼각형보다 더 밝습니다.",
                         [
                             "rectangle",

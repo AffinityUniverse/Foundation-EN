@@ -1324,7 +1324,7 @@ body.flashcard-page {
 
 /* 중앙 VOCA 단어 크기 축소 */
 .card-message.voca-message {
-    font-size: clamp(27px, calc(var(--card-size) * 0.075), 40px);
+    font-size: clamp(18px, calc(var(--card-size) * 0.052), 27px);
     font-weight: 700;
     line-height: 1.1;
     letter-spacing: -0.025em;
@@ -1736,88 +1736,164 @@ body.flashcard-page {
     color: rgba(255, 255, 255, 0.36) !important;
 }
 
-
 /* ========================================
-   background + shadow tone match
-   1번 레퍼런스 기준
+   FLASHCARD APP REFERENCE - EXACT BACKGROUND & SHADOW
+   배경색과 그림자 톤만 참고 파일 값으로 최종 고정
 ======================================== */
 
 :root {
-    --page-blue: #0038d8;
-    --page-blue-top: #0047f4;
-    --page-blue-mid: #0039d0;
-    --page-blue-bottom: #00238f;
-
-    --flashcard-front-blue: #0a47f4;
-    --flashcard-back-blue: #07358a;
-
-    --card-shadow:
-        0 24px 44px rgba(0, 17, 78, 0.24),
-        0 10px 22px rgba(0, 12, 60, 0.14);
-
-    --card-open-shadow:
-        -18px 18px 30px rgba(0, 22, 85, 0.16);
+    --reference-royal: #0046FF;
+    --reference-navy: #001A6E;
+    --reference-card-shadow:
+        0 12px 48px rgba(0, 0, 0, 0.45),
+        0 2px 8px rgba(0, 0, 0, 0.30);
+    --reference-card-hover-shadow:
+        0 20px 64px rgba(0, 0, 0, 0.55),
+        0 4px 16px rgba(0, 0, 0, 0.35);
 }
 
-/* 전체 배경: 1번처럼 더 밝은 블루 계열 */
+/* 참고 HTML과 동일한 160deg 로열 블루 → 네이비 배경 */
 html,
 body,
 body.flashcard-page {
-    background-color: #0038d8 !important;
-    background-image:
-        radial-gradient(
-            circle at 0% 0%,
-            rgba(106, 154, 255, 0.16) 0%,
-            rgba(67, 118, 255, 0.10) 20%,
-            rgba(28, 79, 234, 0.05) 36%,
-            rgba(0, 56, 216, 0) 54%
-        ),
-        linear-gradient(
-            180deg,
-            #0047f4 0%,
-            #003edc 42%,
-            #0033c1 68%,
-            #00238f 100%
-        ) !important;
+    background-color: var(--reference-navy) !important;
+    background-image: linear-gradient(
+        160deg,
+        var(--reference-royal) 0%,
+        var(--reference-navy) 100%
+    ) !important;
     background-attachment: fixed !important;
 }
 
-/* 카드 뒤 배경 */
+/* 카드 기본 그림자 */
 .card-stage,
 .flashcard-page .card-stage {
-    background-color: var(--flashcard-back-blue) !important;
-    box-shadow: var(--card-shadow) !important;
+    background-color: var(--reference-navy) !important;
+    box-shadow: var(--reference-card-shadow) !important;
 }
 
-/* 카드 앞면 */
-.door-face,
-.door-front {
-    background-color: var(--flashcard-front-blue) !important;
-}
-
-/* 카드 안쪽 */
-.card-face-content {
-    background-color: var(--flashcard-back-blue) !important;
-}
-
-/* 포커스 시 그림자 */
+/* 카드 포커스 상태에서도 같은 그림자 유지 */
 .card-stage:focus-visible,
 .flashcard-page .card-stage:focus,
 .flashcard-page .card-stage:focus-visible {
-    box-shadow:
-        0 0 0 1px rgba(255, 255, 255, 0.14),
-        0 24px 44px rgba(0, 17, 78, 0.24),
-        0 10px 22px rgba(0, 12, 60, 0.14) !important;
+    outline: none !important;
+    box-shadow: var(--reference-card-shadow) !important;
 }
 
-/* 카드 열렸을 때 그림자 */
+/* 앞면과 뒷면 색상도 참고 파일의 두 색상으로 고정 */
+.door-face,
+.door-front {
+    background-color: var(--reference-royal) !important;
+}
+
+.card-face-content,
+.door-back {
+    background-color: var(--reference-navy) !important;
+}
+
+/* 카드가 열렸을 때도 검은 그림자 톤 유지 */
 .group.open .english-door {
-    box-shadow: var(--card-open-shadow) !important;
+    box-shadow:
+        -18px 18px 42px rgba(0, 0, 0, 0.38),
+        -4px 4px 12px rgba(0, 0, 0, 0.24) !important;
 }
 
-/* 하단 네비 영역 그림자 톤도 같이 정리 */
+/* 마우스 오버가 적용되는 구조일 경우 참고 HTML과 동일한 강화 그림자 */
+.card-stage:hover,
+.flashcard-page .card-stage:hover {
+    box-shadow: var(--reference-card-hover-shadow) !important;
+}
+
+/* 기존 우상단 원형은 유지하되 참고 HTML과 동일한 투명도 적용 */
+.door-front::after {
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* ========================================
+   FINAL BACKGROUND + CARD SHADOW
+   1번 이미지 톤 기준
+======================================== */
+
+/* 전체 페이지 배경 */
+html,
+html body,
+html body.flashcard-page {
+    background-color: #00278f !important;
+
+    background-image:
+        radial-gradient(
+            circle at 6% 4%,
+            rgba(70, 121, 255, 0.20) 0%,
+            rgba(40, 92, 245, 0.11) 27%,
+            rgba(13, 61, 215, 0.04) 43%,
+            rgba(0, 42, 164, 0) 58%
+        ),
+        linear-gradient(
+            145deg,
+            #0948ed 0%,
+            #073fd7 32%,
+            #0433b8 58%,
+            #02288f 78%,
+            #001c69 100%
+        ) !important;
+
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-attachment: fixed !important;
+}
+
+/* 카드 기본 그림자 */
+.card-stage,
+.flashcard-page .card-stage,
+.scene .card {
+    box-shadow:
+        0 22px 44px rgba(0, 12, 65, 0.38),
+        0 7px 16px rgba(0, 9, 52, 0.22),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.10) !important;
+}
+
+/* 카드 포커스 상태 */
+.card-stage:focus,
+.card-stage:focus-visible,
+.flashcard-page .card-stage:focus,
+.flashcard-page .card-stage:focus-visible {
+    outline: none !important;
+
+    box-shadow:
+        0 22px 44px rgba(0, 12, 65, 0.38),
+        0 7px 16px rgba(0, 9, 52, 0.22),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.10) !important;
+}
+
+/* 카드 호버 상태 */
+.card-stage:hover,
+.flashcard-page .card-stage:hover,
+.scene:hover .card {
+    box-shadow:
+        0 27px 52px rgba(0, 10, 60, 0.43),
+        0 9px 20px rgba(0, 8, 48, 0.24),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.11) !important;
+}
+
+/* 카드가 열렸을 때 문 그림자 */
+.group.open .english-door {
+    box-shadow:
+        -18px 20px 34px rgba(0, 10, 60, 0.28),
+        -5px 7px 14px rgba(0, 8, 48, 0.18) !important;
+}
+
+/* 하단 네비게이터 그림자 */
+.mini-toc,
 .flashcard-page .mini-toc.horizontal-toc,
-.flashcard-page .lesson-dropdown,
-.mini-toc {
-    box-shadow: 0 12px 24px rgba(0, 18, 74, 0.14) !important;
+.flashcard-page .lesson-dropdown {
+    box-shadow:
+        0 12px 26px rgba(0, 12, 60, 0.18) !important;
+}
+
+/* 카드 앞면·안쪽 면 색상 통일 */
+.door-face,
+.door-front,
+.door-back {
+    background-color: #0A47F4 !important;
 }

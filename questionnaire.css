@@ -1489,3 +1489,108 @@ body.flashcard-page {
         font-size: 9px;
     }
 }
+
+
+/* ========================================
+   2026-07-20 2차 톤다운 수정
+   - 기존 블루 톤 유지, 전체 채도/명도 소폭 다운
+   - 노란 포인트 제거
+   - 카드 원형 포인트 사용하지 않음
+======================================== */
+
+:root {
+    --page-blue: #0031b2;
+    --point-yellow: #8fa8ff;
+    --flashcard-front-blue: #0b43d6;
+    --flashcard-back-blue: #052f80;
+    --flashcard-nav-blue: rgba(4, 33, 106, 0.54);
+    --flashcard-nav-line: rgba(255, 255, 255, 0.14);
+    --flashcard-muted-text: rgba(255, 255, 255, 0.44);
+}
+
+body,
+body.flashcard-page {
+    background-color: #00237d;
+    background-image:
+        radial-gradient(circle at 0% 0%, rgba(46, 103, 255, 0.42) 0%, rgba(46, 103, 255, 0) 42%),
+        linear-gradient(145deg, #003fda 0%, #0031b2 46%, #001756 100%);
+}
+
+.card-stage {
+    background-color: var(--flashcard-back-blue);
+    box-shadow:
+        0 16px 34px rgba(0, 16, 72, 0.28),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.door-face {
+    background-color: var(--flashcard-front-blue);
+}
+
+.card-face-content {
+    background-color: var(--flashcard-back-blue);
+}
+
+.card-stage:focus-visible,
+.flashcard-page .card-stage:focus,
+.flashcard-page .card-stage:focus-visible {
+    box-shadow:
+        0 16px 34px rgba(0, 16, 72, 0.28),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.title span,
+.card-message span {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.flashcard-page .title {
+    color: rgba(255, 255, 255, 0.68);
+}
+
+.card-eyebrow,
+.card-footer,
+.flashcard-page .course-breadcrumb a,
+.flashcard-page .breadcrumb-current,
+.flashcard-page .breadcrumb-separator,
+.flashcard-page .keyboard-hint,
+.flashcard-page .keyboard-hint kbd,
+.toc-title,
+.flashcard-page .horizontal-toc .toc-title,
+.flashcard-page .lesson-switcher-arrow {
+    color: rgba(255, 255, 255, 0.42);
+}
+
+.mini-toc,
+.flashcard-page .mini-toc.horizontal-toc,
+.flashcard-page .lesson-dropdown {
+    border-color: var(--flashcard-nav-line);
+    background-color: var(--flashcard-nav-blue);
+    box-shadow: 0 12px 28px rgba(0, 18, 74, 0.2);
+}
+
+.mini-toc a,
+.flashcard-page .horizontal-toc a,
+.flashcard-page .lesson-dropdown a,
+.flashcard-page .card-navigation button,
+.flashcard-page .card-navigation .nav-button {
+    border-color: rgba(255, 255, 255, 0.14);
+    color: rgba(255, 255, 255, 0.72);
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.mini-toc a:hover,
+.mini-toc a.active,
+.flashcard-page .lesson-dropdown a:hover,
+.flashcard-page .lesson-dropdown a:focus-visible,
+.flashcard-page .card-navigation button:hover,
+.flashcard-page .card-navigation .nav-button:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.24);
+}
+
+.flashcard-page .lesson-number {
+    color: rgba(255, 255, 255, 0.78);
+    background-color: rgba(255, 255, 255, 0.09);
+}

@@ -1255,3 +1255,237 @@ body.flashcard-page {
         font-size: 10px;
     }
 }
+
+/* ========================================
+   2026-07-20 레퍼런스 이미지 톤 조정
+   - 배경/카드 블루 톤 통일
+   - VOCA 및 보조 문구 축소
+   - 네비게이터의 노란 강조 제거
+======================================== */
+
+:root {
+    --card-radius: 28px;
+    --page-blue: #0037c8;
+    --flashcard-front-blue: #0046ff;
+    --flashcard-back-blue: #07358a;
+    --flashcard-nav-blue: rgba(4, 40, 139, 0.58);
+    --flashcard-nav-line: rgba(255, 255, 255, 0.18);
+    --flashcard-muted-text: rgba(255, 255, 255, 0.46);
+}
+
+/* 레퍼런스처럼 위쪽은 선명하고 아래쪽은 짙은 블루 그라데이션 */
+body,
+body.flashcard-page {
+    background-color: #00288f;
+    background-image:
+        radial-gradient(circle at 0% 0%, rgba(0, 79, 255, 0.72) 0%, rgba(0, 79, 255, 0) 44%),
+        linear-gradient(145deg, #0048f4 0%, #0036c7 48%, #001d73 100%);
+    background-attachment: fixed;
+}
+
+/* 카드 컬러와 그림자 */
+.card-stage {
+    background-color: var(--flashcard-back-blue);
+    box-shadow:
+        0 18px 38px rgba(0, 19, 91, 0.28),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+}
+
+.door-face {
+    background-color: var(--flashcard-front-blue);
+}
+
+.card-face-content {
+    background-color: var(--flashcard-back-blue);
+}
+
+.flashcard-page .card-stage:focus,
+.flashcard-page .card-stage:focus-visible {
+    box-shadow:
+        0 18px 38px rgba(0, 19, 91, 0.28),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+}
+
+/* 카드 내부의 전체 글자 크기를 레퍼런스처럼 작게 조정 */
+.card-eyebrow,
+.card-footer {
+    color: var(--flashcard-muted-text);
+    font-size: clamp(8px, calc(var(--card-size) * 0.021), 11px);
+    font-weight: 500;
+    letter-spacing: 0.11em;
+}
+
+.card-message {
+    font-size: clamp(18px, calc(var(--card-size) * 0.052), 27px);
+    font-weight: 650;
+    line-height: 1.22;
+    letter-spacing: -0.018em;
+}
+
+/* 중앙 VOCA 단어 크기 축소 */
+.card-message.voca-message {
+    font-size: clamp(27px, calc(var(--card-size) * 0.075), 40px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+}
+
+.card-message.pattern-message {
+    font-size: clamp(18px, calc(var(--card-size) * 0.052), 27px);
+}
+
+/* 상단 제목 및 학습 경로를 작고 가볍게 */
+.flashcard-page .title {
+    margin: 0;
+    padding: 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: clamp(14px, 1.25vw, 18px);
+    font-weight: 600;
+    line-height: 1.45;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.flashcard-page .course-breadcrumb {
+    gap: 6px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background-color: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+.flashcard-page .course-breadcrumb a,
+.flashcard-page .breadcrumb-current {
+    height: auto;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    color: rgba(255, 255, 255, 0.5);
+    background-color: transparent;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    line-height: 1.35;
+}
+
+.flashcard-page .course-breadcrumb a:hover,
+.flashcard-page .breadcrumb-current {
+    color: rgba(255, 255, 255, 0.64);
+    background-color: transparent;
+    border-color: transparent;
+    transform: none;
+}
+
+.flashcard-page .breadcrumb-separator {
+    width: auto;
+    height: auto;
+    color: rgba(255, 255, 255, 0.28);
+    font-size: 10px;
+    font-weight: 500;
+}
+
+/* 네비게이터: 노란색 대신 차분한 반투명 블루 */
+.mini-toc,
+.flashcard-page .mini-toc.horizontal-toc,
+.flashcard-page .lesson-dropdown {
+    border-color: var(--flashcard-nav-line);
+    background-color: var(--flashcard-nav-blue);
+    box-shadow: 0 12px 30px rgba(0, 20, 89, 0.22);
+}
+
+.toc-title,
+.flashcard-page .horizontal-toc .toc-title {
+    color: rgba(255, 255, 255, 0.42);
+    font-size: 8px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+}
+
+.mini-toc a,
+.flashcard-page .horizontal-toc a,
+.flashcard-page .lesson-dropdown a {
+    border-color: rgba(255, 255, 255, 0.16);
+    color: rgba(255, 255, 255, 0.68);
+    background-color: rgba(255, 255, 255, 0.045);
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.mini-toc a:hover,
+.mini-toc a.active,
+.flashcard-page .lesson-dropdown a:hover,
+.flashcard-page .lesson-dropdown a:focus-visible {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.13);
+    border-color: rgba(255, 255, 255, 0.28);
+}
+
+.flashcard-page .lesson-number {
+    color: rgba(255, 255, 255, 0.84);
+    background-color: rgba(255, 255, 255, 0.12);
+    font-size: 10px;
+}
+
+.flashcard-page .lesson-switcher-arrow {
+    color: rgba(255, 255, 255, 0.42);
+}
+
+/* 하단 안내 문구도 레퍼런스처럼 작고 옅게 */
+.flashcard-page .keyboard-hint {
+    color: rgba(255, 255, 255, 0.28);
+    font-size: 8px;
+    font-weight: 600;
+    letter-spacing: 0.11em;
+}
+
+.flashcard-page .keyboard-hint kbd {
+    border-color: rgba(255, 255, 255, 0.14);
+    color: rgba(255, 255, 255, 0.46);
+    background-color: rgba(255, 255, 255, 0.035);
+}
+
+/* card-navigation 안에 일반 버튼이 있을 경우 동일한 톤 적용 */
+.flashcard-page .card-navigation button,
+.flashcard-page .card-navigation .nav-button {
+    min-width: 88px;
+    height: 38px;
+    padding: 0 18px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 11px;
+    color: rgba(255, 255, 255, 0.86);
+    background-color: rgba(255, 255, 255, 0.1);
+    font-family: "Paperozi", sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+}
+
+.flashcard-page .card-navigation button:disabled,
+.flashcard-page .card-navigation .nav-button.is-disabled {
+    color: rgba(255, 255, 255, 0.24);
+    background-color: rgba(255, 255, 255, 0.025);
+    border-color: rgba(255, 255, 255, 0.07);
+}
+
+@media (max-width: 700px) {
+    :root {
+        --card-radius: 22px;
+    }
+
+    .flashcard-page .title {
+        font-size: 12px;
+        letter-spacing: 0.14em;
+    }
+
+    .card-message.voca-message {
+        font-size: clamp(24px, calc(var(--card-size) * 0.078), 32px);
+    }
+
+    .flashcard-page .course-breadcrumb a,
+    .flashcard-page .breadcrumb-current {
+        font-size: 9px;
+    }
+}

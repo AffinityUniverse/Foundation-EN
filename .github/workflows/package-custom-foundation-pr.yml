@@ -1,0 +1,209 @@
+name: Build customized Foundation EN ZIP
+
+on:
+  pull_request:
+    branches:
+      - chatgpt-package-base-20260822
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Apply requested UI changes
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          root = Path('.')
+          index_path = root / 'index.html'
+          index = index_path.read_text(encoding='utf-8')
+
+          index_override = r'''
+
+        /* ========================================
+           2026-08-22 FINAL FOUNDATION UI OVERRIDE
+           - Brighter blue background
+           - Rounded graphic motif
+           - White DESIGN title
+           - Top-right logo with rounded corners
+        ======================================== */
+        body {
+            position: relative;
+            overflow-x: hidden;
+            background-color: #001A6E;
+            background-image:
+                radial-gradient(circle at 8% 2%, rgba(77, 132, 255, 0.28) 0%, rgba(77, 132, 255, 0) 34%),
+                linear-gradient(160deg, #0758FF 0%, #063ECF 50%, #001A6E 100%);
+            background-attachment: fixed;
+        }
+        .page { position: relative; isolation: isolate; }
+        .page::before {
+            content: "";
+            position: absolute;
+            top: -205px;
+            right: -145px;
+            z-index: -1;
+            width: 430px;
+            height: 430px;
+            border-radius: 50%;
+            background: rgba(116, 164, 255, 0.12);
+            pointer-events: none;
+        }
+        .hero h1 span { color: #FFFFFF; }
+        .foundation-corner-logo {
+            position: absolute;
+            top: 66px;
+            right: 0;
+            z-index: 5;
+            width: 58px;
+            height: 58px;
+            display: block;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 12px 28px rgba(0, 16, 82, 0.26);
+        }
+        @media (max-width: 620px) {
+            .page::before { top: -145px; right: -130px; width: 320px; height: 320px; }
+            .foundation-corner-logo { top: 42px; right: 0; width: 46px; height: 46px; border-radius: 12px; }
+        }
+'''
+          if '2026-08-22 FINAL FOUNDATION UI OVERRIDE' not in index:
+              index = index.replace('</style>', index_override + '\n    </style>', 1)
+          logo_tag = '        <img class="foundation-corner-logo" src="foundation-logo.png" alt="Affinity Universe logo">\n'
+          if '<img class="foundation-corner-logo"' not in index:
+              index = index.replace('    <main class="page">\n', '    <main class="page">\n' + logo_tag, 1)
+          index_path.write_text(index, encoding='utf-8')
+
+          css = r'''/* 2026-08-22 FINAL FLASHCARD OVERRIDES */
+.flashcard-page #doorFront .card-message.voca-message,
+.flashcard-page #doorBack .card-message.voca-message,
+.flashcard-page #koreanCard .card-message.voca-message {
+    font-size: clamp(32px, calc(var(--card-size) * 0.11), 46px) !important;
+    line-height: 1.08 !important;
+    letter-spacing: -0.025em !important;
+}
+.flashcard-page .card-message.split-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 0.58em;
+}
+.flashcard-page .card-message.split-message .message-line { display: block; width: 100%; }
+@media (max-width: 700px) {
+    .flashcard-page #doorFront .card-message.voca-message,
+    .flashcard-page #doorBack .card-message.voca-message,
+    .flashcard-page #koreanCard .card-message.voca-message {
+        font-size: clamp(25px, calc(var(--card-size) * 0.105), 34px) !important;
+    }
+    .flashcard-page .card-message.split-message { gap: 0.52em; }
+}
+'''
+          (root / 'foundation-ui-overrides.css').write_text(css, encoding='utf-8')
+
+          js = r'''(() => {
+    "use strict";
+    const slashPattern = /\s+\/\s+/;
+    function getParts(text) {
+        return String(text || "").split(slashPattern).map(part => part.trim()).filter(Boolean);
+    }
+    function isTwoSentenceEnglish(text) {
+        const parts = getParts(text);
+        if (parts.length !== 2) return false;
+        return parts.every(part => {
+            const words = part.split(/\s+/).filter(Boolean);
+            return words.length >= 2 && /[.!?][\"']?$/.test(part);
+        });
+    }
+    function splitMessage(message, originalText) {
+        if (!message || message.classList.contains("split-message")) return;
+        const parts = getParts(originalText);
+        if (parts.length !== 2) return;
+        message.replaceChildren();
+        message.classList.add("split-message");
+        parts.forEach(part => {
+            const line = document.createElement("span");
+            line.className = "message-line";
+            line.textContent = part;
+            message.append(line);
+        });
+    }
+    function processCurrentCard() {
+        const front = document.querySelector("#doorFront .card-message");
+        const back = document.querySelector("#doorBack .card-message");
+        const korean = document.querySelector("#koreanCard .card-message");
+        if (!front || !back || !korean) return;
+        const frontText = front.textContent.trim();
+        const backText = back.textContent.trim();
+        const koreanText = korean.textContent.trim();
+        if (!isTwoSentenceEnglish(frontText)) return;
+        splitMessage(front, frontText);
+        splitMessage(back, backText);
+        splitMessage(korean, koreanText);
+    }
+    function start() {
+        const targets = [document.getElementById("doorFront"), document.getElementById("doorBack"), document.getElementById("koreanCard")].filter(Boolean);
+        if (targets.length === 0) return;
+        let scheduled = false;
+        const schedule = () => {
+            if (scheduled) return;
+            scheduled = true;
+            requestAnimationFrame(() => { scheduled = false; processCurrentCard(); });
+        };
+        const observer = new MutationObserver(schedule);
+        targets.forEach(target => observer.observe(target, { childList: true, subtree: true, characterData: true }));
+        schedule();
+    }
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start, { once: true });
+    else start();
+})();
+'''
+          (root / 'foundation-ui-overrides.js').write_text(js, encoding='utf-8')
+
+          for html_path in sorted(root.glob('FD*/FD*-content.html')):
+              html = html_path.read_text(encoding='utf-8')
+              css_tag = '<link href="../foundation-ui-overrides.css?v=20260822-final" rel="stylesheet"/>'
+              js_tag = '<script defer="" src="../foundation-ui-overrides.js?v=20260822-final"></script>'
+              if 'foundation-ui-overrides.css' not in html:
+                  marker = '<link href="../questionnaire-v5.css?v=20260809-layout-refine" rel="stylesheet"/>'
+                  html = html.replace(marker, marker + '\n' + css_tag, 1)
+              if 'foundation-ui-overrides.js' not in html:
+                  marker = '<script defer="" src="../flashcard.js?v=20260809-layout-refine"></script>'
+                  html = html.replace(marker, marker + '\n' + js_tag, 1)
+              html_path.write_text(html, encoding='utf-8')
+          PY
+
+      - name: Validate expected files
+        shell: bash
+        run: |
+          test -f index.html
+          test -f foundation-logo.png
+          test -f foundation-ui-overrides.css
+          test -f foundation-ui-overrides.js
+          test -d FD01/images
+          grep -q 'foundation-corner-logo' index.html
+          grep -q 'foundation-ui-overrides.css' FD01/FD01-1-content.html
+          grep -q 'split-message' foundation-ui-overrides.js
+
+      - name: Package repository preserving paths
+        shell: bash
+        run: |
+          rm -rf .git
+          rm -rf .github
+          zip -q -r Foundation-EN-final-20260822.zip . -x 'Foundation-EN-final-20260822.zip'
+
+      - name: Upload ZIP artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Foundation-EN-final-20260822
+          path: Foundation-EN-final-20260822.zip
+          if-no-files-found: error
+          retention-days: 1

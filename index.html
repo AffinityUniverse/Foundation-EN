@@ -1,100 +1,90 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Foundation Design</title>
-
     <meta property="og:title" content="Foundation Design">
     <meta property="og:description" content="FD01부터 FD12까지 전체 클래스를 한곳에서 확인합니다.">
     <meta property="og:image" content="FD02/FD02-1/Selecting%20%26%20Moving/v1-1.png">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&display=swap"
-        rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --blue: #0031B2;
-            --deep-blue: #001756;
-            --card-blue: #0B43D6;
-            --card-blue-hover: #1350E2;
-            --accent-blue: #B8C8FF;
-            --white: #FFFFFF;
-            --line: rgba(255, 255, 255, 0.14);
-            --soft-white: rgba(255, 255, 255, 0.62);
+            --white: #fff;
+            --line: rgba(255,255,255,.14);
+            --soft-white: rgba(255,255,255,.62);
         }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         body {
+            position: relative;
             min-height: 100vh;
             margin: 0;
-            background-color: #00237D;
-            background-image:
-                radial-gradient(circle at 0% 0%, rgba(46, 103, 255, 0.42) 0%, rgba(46, 103, 255, 0) 42%),
-                linear-gradient(145deg, #003FDA 0%, #0031B2 46%, #001756 100%);
-            background-attachment: fixed;
+            overflow-x: hidden;
             color: var(--white);
             font-family: "Montserrat", Arial, sans-serif;
+            background-color: #001a6e;
+            background-image:
+                radial-gradient(circle at 7% 2%, rgba(92,145,255,.24) 0%, rgba(92,145,255,0) 34%),
+                linear-gradient(160deg, #0758ff 0%, #063ecf 50%, #001a6e 100%);
+            background-attachment: fixed;
         }
-
         .page {
+            position: relative;
+            isolation: isolate;
             width: min(1240px, calc(100% - 40px));
             margin: 0 auto;
             padding: 74px 0 84px;
         }
-
+        .page::before {
+            content: "";
+            position: absolute;
+            top: -205px;
+            right: -145px;
+            z-index: -1;
+            width: 430px;
+            height: 430px;
+            border-radius: 50%;
+            background: rgba(116,164,255,.12);
+            pointer-events: none;
+        }
         .brand-kicker {
             margin: 0 0 13px;
-            color: rgba(255, 255, 255, 0.58);
+            color: rgba(255,255,255,.58);
             font-size: 11px;
             font-weight: 700;
-            letter-spacing: 0.28em;
+            letter-spacing: .28em;
             line-height: 1;
             text-transform: uppercase;
         }
-
-        .hero {
-            display: block;
-            margin-bottom: 44px;
-        }
-
+        .hero { display: block; margin-bottom: 44px; }
         .hero h1 {
             margin: 0;
+            color: #fff;
             font-size: clamp(38px, 5.6vw, 72px);
-            line-height: 0.98;
-            letter-spacing: -0.035em;
+            line-height: .98;
+            letter-spacing: -.035em;
         }
-
-        .hero h1 span {
-            color: var(--accent-blue);
+        .hero h1 span { color: #fff; }
+        .foundation-corner-logo {
+            position: absolute;
+            top: 66px;
+            right: 0;
+            z-index: 5;
+            width: 58px;
+            height: 58px;
+            display: block;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 12px 28px rgba(0,16,82,.26);
         }
-
-        .hero-copy {
-            margin: 0 0 7px;
-            color: var(--soft-white);
-            font-size: clamp(16px, 1.7vw, 20px);
-            font-weight: 600;
-            line-height: 1.7;
-            word-break: keep-all;
-        }
-
         .course-grid {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 17px;
         }
-
         .course-card {
             position: relative;
             display: flex;
@@ -105,41 +95,21 @@
             overflow: hidden;
             border: 1px solid var(--line);
             border-radius: 25px;
-            background:
-                linear-gradient(145deg, rgba(11, 67, 214, 0.95), rgba(5, 47, 128, 0.92));
-            color: var(--white);
+            background: linear-gradient(145deg, rgba(11,67,214,.95), rgba(5,47,128,.92));
+            color: #fff;
             text-decoration: none;
-            box-shadow:
-                0 18px 42px rgba(0, 18, 86, 0.25),
-                inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+            box-shadow: 0 18px 42px rgba(0,18,86,.25), inset 0 0 0 1px rgba(255,255,255,.06);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            transition:
-                transform 0.28s ease,
-                border-color 0.28s ease,
-                background-color 0.28s ease,
-                box-shadow 0.28s ease;
+            transition: transform .28s ease, border-color .28s ease, box-shadow .28s ease;
         }
-
-        .course-card:hover,
-        .course-card:focus-visible {
+        .course-card:hover, .course-card:focus-visible {
             transform: translateY(-7px);
-            border-color: rgba(255, 255, 255, 0.20);
-            background:
-                linear-gradient(145deg, rgba(19, 80, 226, 0.98), rgba(7, 54, 150, 0.94));
-            box-shadow: 0 26px 58px rgba(0, 17, 86, 0.34);
+            border-color: rgba(255,255,255,.2);
+            background: linear-gradient(145deg, rgba(19,80,226,.98), rgba(7,54,150,.94));
+            box-shadow: 0 26px 58px rgba(0,17,86,.34);
             outline: none;
         }
-
-        .course-card:hover::before,
-        .course-card:focus-visible::before {
-            transform: scale(1.25);
-            background: rgba(255, 255, 255, 0.08);
-        }
-        .course-card::before {
-            content: none;
-        }
-
         .course-card-top {
             position: relative;
             z-index: 1;
@@ -147,52 +117,22 @@
             justify-content: space-between;
             align-items: center;
         }
-
-        .course-code {
-            color: rgba(255, 255, 255, 0.78);
-            font-size: 13px;
-            font-weight: 500;
-        }
-
+        .course-code { color: rgba(255,255,255,.78); font-size: 13px; font-weight: 500; }
         .course-arrow {
             display: grid;
             width: 43px;
             height: 43px;
             place-items: center;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.14);
-            color: rgba(255, 255, 255, 0.92);
+            background: rgba(255,255,255,.14);
+            color: rgba(255,255,255,.92);
             font-size: 22px;
             font-weight: 900;
-            transition: transform 0.28s ease;
+            transition: transform .28s ease;
         }
-
-        .course-card:hover .course-arrow,
-        .course-card:focus-visible .course-arrow {
-            transform: rotate(45deg) scale(1.08);
-        }
-
-        .course-card-bottom {
-            position: relative;
-            z-index: 1;
-        }
-
-        .course-card h2 {
-            max-width: 88%;
-            margin: 0 0 9px;
-            font-size: clamp(20px, 2.1vw, 28px);
-            line-height: 1.08;
-            letter-spacing: -0.02em;
-        }
-
-        .course-card p {
-            margin: 0;
-            color: rgba(255, 255, 255, 0.56);
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: 0.13em;
-        }
-
+        .course-card:hover .course-arrow, .course-card:focus-visible .course-arrow { transform: rotate(45deg) scale(1.08); }
+        .course-card-bottom { position: relative; z-index: 1; }
+        .course-card h2 { max-width: 88%; margin: 0; font-size: clamp(20px, 2.1vw, 28px); line-height: 1.08; letter-spacing: -.02em; }
         .footer {
             display: flex;
             justify-content: space-between;
@@ -200,195 +140,51 @@
             margin-top: 38px;
             padding-top: 23px;
             border-top: 1px solid var(--line);
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255,255,255,.5);
             font-size: 12px;
             font-weight: 700;
-            letter-spacing: 0.09em;
+            letter-spacing: .09em;
         }
-
-        @media (max-width: 920px) {
-            .course-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-        }
-
+        @media (max-width: 920px) { .course-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
         @media (max-width: 620px) {
-            .page {
-                width: min(100% - 26px, 1240px);
-                padding: 49px 0 62px;
-            }
-
-            .hero {
-                margin-bottom: 34px;
-            }
-
-            .brand-kicker {
-                margin-bottom: 10px;
-                font-size: 9px;
-                letter-spacing: 0.23em;
-            }
-
-            .hero h1 {
-                font-size: clamp(36px, 12vw, 52px);
-            }
-
-            .course-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .course-card {
-                min-height: 130px;
-                padding: 23px;
-                border-radius: 23px;
-            }
-
-            .footer {
-                flex-direction: column;
-            }
+            .page { width: min(100% - 26px, 1240px); padding: 49px 0 62px; }
+            .page::before { top: -145px; right: -130px; width: 320px; height: 320px; }
+            .foundation-corner-logo { top: 42px; width: 46px; height: 46px; border-radius: 12px; }
+            .hero { margin-bottom: 34px; }
+            .brand-kicker { margin-bottom: 10px; font-size: 9px; letter-spacing: .23em; }
+            .hero h1 { font-size: clamp(36px, 12vw, 52px); }
+            .course-grid { grid-template-columns: 1fr; }
+            .course-card { min-height: 130px; padding: 23px; border-radius: 23px; }
+            .footer { flex-direction: column; }
         }
-
         @media (prefers-reduced-motion: reduce) {
-            html {
-                scroll-behavior: auto;
-            }
-
-            .course-card,
-            .course-card::before,
-            .course-arrow {
-                transition: none;
-            }
+            html { scroll-behavior: auto; }
+            .course-card, .course-arrow { transition: none; }
         }
     </style>
 </head>
-
 <body>
     <main class="page">
+        <img class="foundation-corner-logo" src="foundation-logo.png" alt="Affinity Universe logo">
         <section class="hero">
             <p class="brand-kicker">AFFINITY UNIVERSE</p>
-            <h1>
-                Foundation<br>
-                <span>Design</span>
-            </h1>
-
+            <h1>Foundation<br><span>Design</span></h1>
         </section>
-
         <section class="course-grid" aria-label="Foundation Design 전체 강의 목록">
-
-            <a class="course-card" href="FD01/FD01-1-content.html" aria-label="FD01 열기">
-                <div class="course-card-top">
-                    <span class="course-code">Tutorial</span>
-                    <span class="course-arrow" aria-hidden="true">↗</span>
-                </div>
-                <div class="course-card-bottom">
-                    <h2>LESSON 01</h2>
-                </div>
-            </a>
-            <a class="course-card" href="FD02/FD02-1-content.html" aria-label="FD02 열기">
-                <div class="course-card-top">
-                    <span class="course-code">Design Skills Up</span>
-                    <span class="course-arrow" aria-hidden="true">↗</span>
-                </div>
-                <div class="course-card-bottom">
-                    <h2>LESSON 02</h2>
-                </div>
-            </a>
-            <a class="course-card" href="FD03/FD03-1-content.html" aria-label="FD03 열기">
-                <div class="course-card-top">
-                    <span class="course-code">Chromatics 01</span>
-                    <span class="course-arrow" aria-hidden="true">↗</span>
-                </div>
-                <div class="course-card-bottom">
-                    <h2>LESSON 03</h2>
-                </div>
-            </a>
-            <a class="course-card" href="FD04/FD04-1-content.html" aria-label="FD04 열기">
-                <div class="course-card-top">
-                    <span class="course-code">Chromatics 02</span>
-                    <span class="course-arrow" aria-hidden="true">↗</span>
-                </div>
-                <div class="course-card-bottom">
-                    <h2>LESSON 04</h2>
-                </div>
-            </a>
-            <a class="course-card" href="FD05/FD05-1-content.html" aria-label="FD05 열기">
-                <div class="course-card-top">
-                    <span class="course-code">Typographic</span>
-                    <span class="course-arrow" aria-hidden="true">↗</span>
-                </div>
-                <div class="course-card-bottom">
-                    <h2>LESSON 05</h2>
-                </div>
-            </a>
-            <a class="course-card" href="FD06/FD06-1-content.html" aria-label="FD06 열기">
-                <div class="course-card-top">
-                    <span class="course-code">Text Tool</span>
-                    <span class="course-arrow" aria-hidden="true">↗</span>
-                </div>
-                <div class="course-card-bottom">
-                    <h2>LESSON 06</h2>
-                </div>
-            </a>
-            <a class="course-card" href="FD07/FD07-1-content.html" aria-label="FD07 열기">
-                <div class="course-card-top">
-                    <span class="course-code">Image Mask Layers</span>
-                    <span class="course-arrow" aria-hidden="true">↗</span>
-                </div>
-                <div class="course-card-bottom">
-                    <h2>LESSON 07</h2>
-                </div>
-            </a>
-            <a class="course-card" href="FD08/FD08-1-content.html" aria-label="FD08 열기">
-                <div class="course-card-top">
-                    <span class="course-code">Text Mask Layers</span>
-                    <span class="course-arrow" aria-hidden="true">↗</span>
-                </div>
-                <div class="course-card-bottom">
-                    <h2>LESSON 08</h2>
-                </div>
-            </a>
-            <a class="course-card" href="FD09/FD09-1-content.html" aria-label="FD09 열기">
-                <div class="course-card-top">
-                    <span class="course-code">Graphic Effect</span>
-                    <span class="course-arrow" aria-hidden="true">↗</span>
-                </div>
-                <div class="course-card-bottom">
-                    <h2>LESSON 09</h2>
-                </div>
-            </a>
-            <a class="course-card" href="FD10/FD10-1-content.html" aria-label="FD10 열기">
-                <div class="course-card-top">
-                    <span class="course-code">Gradient</span>
-                    <span class="course-arrow" aria-hidden="true">↗</span>
-                </div>
-                <div class="course-card-bottom">
-                    <h2>LESSON 10</h2>
-                </div>
-            </a>
-            <a class="course-card" href="FD11/FD11-1-content.html" aria-label="FD11 열기">
-                <div class="course-card-top">
-                    <span class="course-code">Sketch Digitizing</span>
-                    <span class="course-arrow" aria-hidden="true">↗</span>
-                </div>
-                <div class="course-card-bottom">
-                    <h2>LESSON 11</h2>
-                </div>
-            </a>
-            <a class="course-card" href="FD12/FD12-1-content.html" aria-label="FD12 열기">
-                <div class="course-card-top">
-                    <span class="course-code">Skills Remind</span>
-                    <span class="course-arrow" aria-hidden="true">↗</span>
-                </div>
-                <div class="course-card-bottom">
-                    <h2>LESSON 12</h2>
-                </div>
-            </a>
+            <a class="course-card" href="FD01/FD01-1-content.html" aria-label="FD01 열기"><div class="course-card-top"><span class="course-code">Tutorial</span><span class="course-arrow" aria-hidden="true">↗</span></div><div class="course-card-bottom"><h2>LESSON 01</h2></div></a>
+            <a class="course-card" href="FD02/FD02-1-content.html" aria-label="FD02 열기"><div class="course-card-top"><span class="course-code">Design Skills Up</span><span class="course-arrow" aria-hidden="true">↗</span></div><div class="course-card-bottom"><h2>LESSON 02</h2></div></a>
+            <a class="course-card" href="FD03/FD03-1-content.html" aria-label="FD03 열기"><div class="course-card-top"><span class="course-code">Chromatics 01</span><span class="course-arrow" aria-hidden="true">↗</span></div><div class="course-card-bottom"><h2>LESSON 03</h2></div></a>
+            <a class="course-card" href="FD04/FD04-1-content.html" aria-label="FD04 열기"><div class="course-card-top"><span class="course-code">Chromatics 02</span><span class="course-arrow" aria-hidden="true">↗</span></div><div class="course-card-bottom"><h2>LESSON 04</h2></div></a>
+            <a class="course-card" href="FD05/FD05-1-content.html" aria-label="FD05 열기"><div class="course-card-top"><span class="course-code">Typographic</span><span class="course-arrow" aria-hidden="true">↗</span></div><div class="course-card-bottom"><h2>LESSON 05</h2></div></a>
+            <a class="course-card" href="FD06/FD06-1-content.html" aria-label="FD06 열기"><div class="course-card-top"><span class="course-code">Text Tool</span><span class="course-arrow" aria-hidden="true">↗</span></div><div class="course-card-bottom"><h2>LESSON 06</h2></div></a>
+            <a class="course-card" href="FD07/FD07-1-content.html" aria-label="FD07 열기"><div class="course-card-top"><span class="course-code">Image Mask Layers</span><span class="course-arrow" aria-hidden="true">↗</span></div><div class="course-card-bottom"><h2>LESSON 07</h2></div></a>
+            <a class="course-card" href="FD08/FD08-1-content.html" aria-label="FD08 열기"><div class="course-card-top"><span class="course-code">Text Mask Layers</span><span class="course-arrow" aria-hidden="true">↗</span></div><div class="course-card-bottom"><h2>LESSON 08</h2></div></a>
+            <a class="course-card" href="FD09/FD09-1-content.html" aria-label="FD09 열기"><div class="course-card-top"><span class="course-code">Graphic Effect</span><span class="course-arrow" aria-hidden="true">↗</span></div><div class="course-card-bottom"><h2>LESSON 09</h2></div></a>
+            <a class="course-card" href="FD10/FD10-1-content.html" aria-label="FD10 열기"><div class="course-card-top"><span class="course-code">Gradient</span><span class="course-arrow" aria-hidden="true">↗</span></div><div class="course-card-bottom"><h2>LESSON 10</h2></div></a>
+            <a class="course-card" href="FD11/FD11-1-content.html" aria-label="FD11 열기"><div class="course-card-top"><span class="course-code">Sketch Digitizing</span><span class="course-arrow" aria-hidden="true">↗</span></div><div class="course-card-bottom"><h2>LESSON 11</h2></div></a>
+            <a class="course-card" href="FD12/FD12-1-content.html" aria-label="FD12 열기"><div class="course-card-top"><span class="course-code">Skills Remind</span><span class="course-arrow" aria-hidden="true">↗</span></div><div class="course-card-bottom"><h2>LESSON 12</h2></div></a>
         </section>
-
-        <footer class="footer">
-            <span>AFFINITY UNIVERSE</span>
-            <span>FOUNDATION DESIGN</span>
-        </footer>
+        <footer class="footer"><span>AFFINITY UNIVERSE</span><span>FOUNDATION DESIGN</span></footer>
     </main>
 </body>
-
 </html>

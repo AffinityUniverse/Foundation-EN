@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - chatgpt-foundation-en-zip-20260822
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
@@ -102,8 +105,6 @@ jobs:
               index = index.replace('</style>', index_override + '\n    </style>', 1)
 
           logo_tag = '        <img class="foundation-corner-logo" src="foundation-logo.png" alt="Affinity Universe logo">\n'
-          if 'foundation-corner-logo' not in index.split('<style>')[-1]:
-              pass
           if '<img class="foundation-corner-logo"' not in index:
               index = index.replace('    <main class="page">\n', '    <main class="page">\n' + logo_tag, 1)
 
@@ -163,11 +164,7 @@ jobs:
 
     function isTwoSentenceEnglish(text) {
         const parts = getParts(text);
-
-        if (parts.length !== 2) {
-            return false;
-        }
-
+        if (parts.length !== 2) return false;
         return parts.every(part => {
             const words = part.split(/\s+/).filter(Boolean);
             return words.length >= 2 && /[.!?][\"']?$/.test(part);
@@ -175,18 +172,11 @@ jobs:
     }
 
     function splitMessage(message, originalText) {
-        if (!message || message.classList.contains("split-message")) {
-            return;
-        }
-
+        if (!message || message.classList.contains("split-message")) return;
         const parts = getParts(originalText);
-        if (parts.length !== 2) {
-            return;
-        }
-
+        if (parts.length !== 2) return;
         message.replaceChildren();
         message.classList.add("split-message");
-
         parts.forEach(part => {
             const line = document.createElement("span");
             line.className = "message-line";
@@ -199,19 +189,11 @@ jobs:
         const front = document.querySelector("#doorFront .card-message");
         const back = document.querySelector("#doorBack .card-message");
         const korean = document.querySelector("#koreanCard .card-message");
-
-        if (!front || !back || !korean) {
-            return;
-        }
-
+        if (!front || !back || !korean) return;
         const frontText = front.textContent.trim();
         const backText = back.textContent.trim();
         const koreanText = korean.textContent.trim();
-
-        if (!isTwoSentenceEnglish(frontText)) {
-            return;
-        }
-
+        if (!isTwoSentenceEnglish(frontText)) return;
         splitMessage(front, frontText);
         splitMessage(back, backText);
         splitMessage(korean, koreanText);
@@ -223,30 +205,22 @@ jobs:
             document.getElementById("doorBack"),
             document.getElementById("koreanCard")
         ].filter(Boolean);
-
-        if (targets.length === 0) {
-            return;
-        }
-
+        if (targets.length === 0) return;
         let scheduled = false;
         const schedule = () => {
-            if (scheduled) {
-                return;
-            }
+            if (scheduled) return;
             scheduled = true;
             requestAnimationFrame(() => {
                 scheduled = false;
                 processCurrentCard();
             });
         };
-
         const observer = new MutationObserver(schedule);
         targets.forEach(target => observer.observe(target, {
             childList: true,
             subtree: true,
             characterData: true
         }));
-
         schedule();
     }
 
@@ -261,18 +235,14 @@ jobs:
 
           for html_path in sorted(root.glob('FD*/FD*-content.html')):
               html = html_path.read_text(encoding='utf-8')
-
               css_tag = '<link href="../foundation-ui-overrides.css?v=20260822-final" rel="stylesheet"/>'
               js_tag = '<script defer="" src="../foundation-ui-overrides.js?v=20260822-final"></script>'
-
               if 'foundation-ui-overrides.css' not in html:
                   marker = '<link href="../questionnaire-v5.css?v=20260809-layout-refine" rel="stylesheet"/>'
                   html = html.replace(marker, marker + '\n' + css_tag, 1)
-
               if 'foundation-ui-overrides.js' not in html:
                   marker = '<script defer="" src="../flashcard.js?v=20260809-layout-refine"></script>'
                   html = html.replace(marker, marker + '\n' + js_tag, 1)
-
               html_path.write_text(html, encoding='utf-8')
 
           print('Modified lesson pages:', len(list(root.glob('FD*/FD*-content.html'))))

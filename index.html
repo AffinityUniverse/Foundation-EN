@@ -1,238 +1,370 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
+
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Foundation Design</title>
-  <meta property="og:title" content="Foundation Design" />
-  <meta property="og:description" content="FD01부터 FD12까지 전체 클래스를 한곳에서 확인합니다." />
-  <meta property="og:image" content="FD02/images/1.png" />
-  <style>
-    @font-face {
-      font-family: 'SpoqaHanSansNeo';
-      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SpoqaHanSansNeo-Thin.woff') format('woff');
-      font-weight: 100;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'SpoqaHanSansNeo';
-      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SpoqaHanSansNeo-Light.woff') format('woff');
-      font-weight: 300;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'SpoqaHanSansNeo';
-      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SpoqaHanSansNeo-Regular.woff') format('woff');
-      font-weight: 400;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'SpoqaHanSansNeo';
-      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SpoqaHanSansNeo-Medium.woff') format('woff');
-      font-weight: 500;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'SpoqaHanSansNeo';
-      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SpoqaHanSansNeo-Bold.woff') format('woff');
-      font-weight: 700;
-      font-display: swap;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    :root {
-      color-scheme: dark;
-      --bg: #0D1D32;
-      --bg-mid: #173C63;
-      --text: #ffffff;
-      --muted: rgba(232,239,255,.70);
-      --line: rgba(255,255,255,.16);
-      --card: #ffffff;
-      --card-text: #111111;
-      --card-muted: #777777;
-      --blue: #63B0FF;
-      --navy-2: #153657;
-      --navy-3: #1D4A76;
-      --radius: 28px;
-      --shadow: 0 14px 34px rgba(3,14,29,.22);
-      font-family: 'SpoqaHanSansNeo', Arial, sans-serif;
-    }
+    <title>Foundation Design</title>
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    html, body {
-      margin: 0;
-      min-height: 100%;
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'SpoqaHanSansNeo', Arial, sans-serif;
-    }
-    body {
-      min-height: 100vh;
-      background:
-        radial-gradient(circle at 82% 12%, rgba(99,176,255,.27), transparent 29%),
-        linear-gradient(145deg, #0D1D32 0%, #173C63 52%, #0D1D32 100%);
-      background-attachment: fixed;
-    }
+    <meta property="og:title" content="Foundation Design">
+    <meta property="og:description" content="FD01부터 FD12까지 전체 클래스를 한곳에서 확인합니다.">
+    <meta property="og:image" content="FD02/FD02-1/Selecting%20%26%20Moving/v1-1.png">
+<style>
+        @font-face {
+            font-family: 'SpoqaHanSansNeo';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SpoqaHanSansNeo-Light.woff') format('woff');
+            font-weight: 300;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'SpoqaHanSansNeo';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SpoqaHanSansNeo-Regular.woff') format('woff');
+            font-weight: 400;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'SpoqaHanSansNeo';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SpoqaHanSansNeo-Medium.woff') format('woff');
+            font-weight: 500;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'SpoqaHanSansNeo';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SpoqaHanSansNeo-Bold.woff') format('woff');
+            font-weight: 700;
+            font-display: swap;
+        }
 
-    .page {
-      position: relative;
-      isolation: isolate;
-      width: min(1180px, calc(100% - 48px));
-      margin: 0 auto;
-      padding: 84px 0 104px;
-    }
+        :root {
+            color-scheme: dark;
+            --bg: #0D1D32;
+            --bg-mid: #173C63;
+            --text: #FFFFFF;
+            --muted: rgba(232, 239, 255, .70);
+            --line: rgba(255, 255, 255, .16);
+            --card: #FFFFFF;
+            --card-text: #111111;
+            --card-muted: #777777;
+            --ice-blue: #63B0FF;
+            --navy-2: #153657;
+            --navy-3: #1D4A76;
+            --navy-4: #2E6FA8;
+            --radius: 28px;
+            --shadow: 0 14px 34px rgba(3, 14, 29, .20);
+            font-family: 'SpoqaHanSansNeo', Arial, sans-serif;
+        }
 
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      min-height: 28px;
-      padding: 0 11px;
-      border: 1px solid rgba(99,176,255,.18);
-      border-radius: 999px;
-      background: rgba(99,176,255,.10);
-      color: rgba(121,191,255,.92);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-    }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        html, body {
+            margin: 0;
+            min-height: 100%;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'SpoqaHanSansNeo', Arial, sans-serif;
+        }
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 82% 12%, rgba(99, 176, 255, .28), transparent 29%),
+                linear-gradient(145deg, #0D1D32 0%, #173C63 52%, #0D1D32 100%);
+            background-attachment: fixed;
+        }
 
-    h1 {
-      margin: 16px 0 12px;
-      font-size: clamp(38px, 5vw, 62px);
-      line-height: 1.06;
-      letter-spacing: -.045em;
-      font-weight: 700;
-      text-shadow: 0 8px 30px rgba(0,0,0,.18);
-    }
+        .page {
+            width: min(1180px, calc(100% - 48px));
+            margin: 0 auto;
+            padding: 84px 0 104px;
+        }
 
-    .lead {
-      margin: 0 0 40px;
-      color: var(--muted);
-      font-size: 15px;
-      font-weight: 400;
-      line-height: 1.75;
-    }
+        .brand-kicker {
+            display: inline-flex;
+            align-items: center;
+            min-height: 28px;
+            margin: 0;
+            padding: 0 11px;
+            border: 1px solid rgba(99, 176, 255, .20);
+            border-radius: 999px;
+            background: rgba(99, 176, 255, .10);
+            color: rgba(121, 191, 255, .92);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .16em;
+            line-height: 1;
+            text-transform: uppercase;
+        }
 
-    .lesson-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-    }
+        .hero { margin-bottom: 40px; }
+        .hero h1 {
+            margin: 16px 0 0;
+            font-size: clamp(38px, 5vw, 62px);
+            line-height: 1.04;
+            letter-spacing: -.045em;
+            font-weight: 700;
+            text-shadow: 0 8px 30px rgba(0, 0, 0, .16);
+        }
+        .hero h1 span { color: #8BC9FF; }
+        .hero-copy { color: var(--muted); }
 
-    .lesson-card {
-      position: relative;
-      overflow: hidden;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      grid-template-areas: "title arrow" "meta arrow";
-      column-gap: 22px;
-      row-gap: 3px;
-      align-items: center;
-      min-height: 146px;
-      padding: 28px;
-      border: 1px solid rgba(255,255,255,.10);
-      border-radius: var(--radius);
-      background: linear-gradient(145deg, #ffffff 0%, #f4f9fd 100%);
-      color: var(--card-text);
-      text-align: left;
-      text-decoration: none;
-      box-shadow: var(--shadow);
-      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-    }
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+        }
 
-    .lesson-card:hover,
-    .lesson-card:focus-visible {
-      transform: translateY(-4px);
-      border-color: rgba(99,176,255,.45);
-      box-shadow: 0 20px 46px rgba(3,14,29,.30);
-      outline: none;
-    }
+        .course-card {
+            position: relative;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            grid-template-areas:
+                "bottom arrow"
+                "top arrow";
+            column-gap: 22px;
+            row-gap: 4px;
+            align-items: center;
+            min-height: 146px;
+            padding: 28px;
+            border: 1px solid rgba(255, 255, 255, .10);
+            border-radius: var(--radius);
+            background: linear-gradient(145deg, #FFFFFF 0%, #F4F9FD 100%);
+            color: var(--card-text);
+            text-decoration: none;
+            box-shadow: var(--shadow);
+            transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+        }
+        .course-card::before { content: none; }
+        .course-card:hover,
+        .course-card:focus-visible {
+            transform: translateY(-4px);
+            border-color: rgba(99, 176, 255, .46);
+            box-shadow: 0 20px 46px rgba(3, 14, 29, .29);
+            outline: none;
+        }
 
-    .lesson-title {
-      grid-area: title;
-      display: block;
-      font-size: 28px;
-      line-height: 1.14;
-      letter-spacing: -.035em;
-      font-weight: 700;
-    }
+        .course-card-top {
+            grid-area: top;
+            display: block;
+            min-width: 0;
+        }
+        .course-code {
+            display: block;
+            color: var(--card-muted);
+            font-size: 14px;
+            line-height: 1.5;
+            font-weight: 400;
+            letter-spacing: 0;
+        }
 
-    .lesson-meta {
-      grid-area: meta;
-      color: var(--card-muted);
-      font-size: 14px;
-      line-height: 1.5;
-      font-weight: 400;
-    }
+        .course-card-bottom {
+            grid-area: bottom;
+            min-width: 0;
+        }
+        .course-card h2 {
+            max-width: none;
+            margin: 0;
+            color: #111111;
+            font-size: 28px;
+            line-height: 1.14;
+            letter-spacing: -.035em;
+            font-weight: 700;
+        }
+        .course-card p { margin: 0; }
 
-    .arrow-dot {
-      grid-area: arrow;
-      display: grid;
-      place-items: center;
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
-      background: linear-gradient(145deg, #1D4A76 0%, #153657 100%);
-      color: #ffffff;
-      font-size: 26px;
-      line-height: 1;
-      transition: transform .18s ease, background .18s ease;
-    }
+        .course-arrow {
+            grid-area: arrow;
+            display: grid;
+            place-items: center;
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #1D4A76 0%, #153657 100%);
+            color: #FFFFFF;
+            font-size: 0;
+            font-weight: 400;
+            transition: transform .18s ease, background .18s ease;
+        }
+        .course-arrow::before {
+            content: '→';
+            font-size: 26px;
+            line-height: 1;
+        }
+        .course-card:hover .course-arrow,
+        .course-card:focus-visible .course-arrow {
+            transform: translateX(2px);
+            background: linear-gradient(145deg, #2E6FA8 0%, #1D4A76 100%);
+        }
 
-    .lesson-card:hover .arrow-dot,
-    .lesson-card:focus-visible .arrow-dot {
-      transform: translateX(2px);
-      background: linear-gradient(145deg, #2E6FA8 0%, #1D4A76 100%);
-    }
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 38px;
+            padding-top: 22px;
+            border-top: 1px solid var(--line);
+            color: rgba(255, 255, 255, .42);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: .08em;
+        }
 
-    @media (max-width: 980px) {
-      .lesson-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-
-    @media (max-width: 680px) {
-      .page {
-        width: min(100% - 24px, 1180px);
-        padding: 42px 0 72px;
-      }
-      h1 { font-size: clamp(38px, 12vw, 54px); }
-      .lead { margin-bottom: 28px; }
-      .lesson-grid { grid-template-columns: 1fr; }
-      .lesson-card {
-        min-height: 116px;
-        padding: 20px 18px;
-        border-radius: 20px;
-      }
-      .lesson-title { font-size: 24px; }
-      .arrow-dot { width: 44px; height: 44px; font-size: 21px; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      .lesson-card, .arrow-dot { transition: none; }
-    }
-  </style>
+        @media (max-width: 980px) {
+            .course-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+        @media (max-width: 680px) {
+            .page {
+                width: min(100% - 24px, 1180px);
+                padding: 42px 0 72px;
+            }
+            .hero { margin-bottom: 28px; }
+            .hero h1 { font-size: clamp(38px, 12vw, 54px); }
+            .course-grid { grid-template-columns: 1fr; }
+            .course-card {
+                min-height: 116px;
+                padding: 20px 18px;
+                border-radius: 20px;
+            }
+            .course-card h2 { font-size: 24px; }
+            .course-arrow { width: 44px; height: 44px; }
+            .course-arrow::before { font-size: 21px; }
+            .footer { flex-direction: column; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .course-card, .course-arrow { transition: none; }
+        }
+    </style>
 </head>
-<body>
-  <main class="page">
-    <div class="eyebrow">FOUNDATION ENGLISH</div>
-    <h1>Foundation Course</h1>
-    <p class="lead">레슨을 선택해 Foundation 과정을 시작하세요.</p>
 
-    <section class="lesson-grid" aria-label="Foundation 전체 강의 목록">
-      <a class="lesson-card" href="FD01/FD01-1-content.html"><strong class="lesson-title">FOUNDATION 01</strong><span class="lesson-meta">Tutorial</span><span class="arrow-dot">→</span></a>
-      <a class="lesson-card" href="FD02/FD02-1-content.html"><strong class="lesson-title">FOUNDATION 02</strong><span class="lesson-meta">Design Skills Up</span><span class="arrow-dot">→</span></a>
-      <a class="lesson-card" href="FD03/FD03-1-content.html"><strong class="lesson-title">FOUNDATION 03</strong><span class="lesson-meta">Chromatics 01</span><span class="arrow-dot">→</span></a>
-      <a class="lesson-card" href="FD04/FD04-1-content.html"><strong class="lesson-title">FOUNDATION 04</strong><span class="lesson-meta">Chromatics 02</span><span class="arrow-dot">→</span></a>
-      <a class="lesson-card" href="FD05/FD05-1-content.html"><strong class="lesson-title">FOUNDATION 05</strong><span class="lesson-meta">Typographic</span><span class="arrow-dot">→</span></a>
-      <a class="lesson-card" href="FD06/FD06-1-content.html"><strong class="lesson-title">FOUNDATION 06</strong><span class="lesson-meta">Text Tool</span><span class="arrow-dot">→</span></a>
-      <a class="lesson-card" href="FD07/FD07-1-content.html"><strong class="lesson-title">FOUNDATION 07</strong><span class="lesson-meta">Image Mask Layers</span><span class="arrow-dot">→</span></a>
-      <a class="lesson-card" href="FD08/FD08-1-content.html"><strong class="lesson-title">FOUNDATION 08</strong><span class="lesson-meta">Text Mask Layers</span><span class="arrow-dot">→</span></a>
-      <a class="lesson-card" href="FD09/FD09-1-content.html"><strong class="lesson-title">FOUNDATION 09</strong><span class="lesson-meta">Graphic Effect</span><span class="arrow-dot">→</span></a>
-      <a class="lesson-card" href="FD10/FD10-1-content.html"><strong class="lesson-title">FOUNDATION 10</strong><span class="lesson-meta">Gradient</span><span class="arrow-dot">→</span></a>
-      <a class="lesson-card" href="FD11/FD11-1-content.html"><strong class="lesson-title">FOUNDATION 11</strong><span class="lesson-meta">Sketch Digitizing</span><span class="arrow-dot">→</span></a>
-      <a class="lesson-card" href="FD12/FD12-1-content.html"><strong class="lesson-title">FOUNDATION 12</strong><span class="lesson-meta">Skills Remind</span><span class="arrow-dot">→</span></a>
-    </section>
-  </main>
+<body>
+    <main class="page">
+        <section class="hero">
+            <p class="brand-kicker">AFFINITY UNIVERSE</p>
+            <h1>
+                Foundation<br>
+                <span>Design</span>
+            </h1>
+
+        </section>
+
+        <section class="course-grid" aria-label="Foundation Design 전체 강의 목록">
+
+            <a class="course-card" href="FD01/FD01-1-content.html" aria-label="FD01 열기">
+                <div class="course-card-top">
+                    <span class="course-code">Tutorial</span>
+                    <span class="course-arrow" aria-hidden="true">↗</span>
+                </div>
+                <div class="course-card-bottom">
+                    <h2>LESSON 01</h2>
+                </div>
+            </a>
+            <a class="course-card" href="FD02/FD02-1-content.html" aria-label="FD02 열기">
+                <div class="course-card-top">
+                    <span class="course-code">Design Skills Up</span>
+                    <span class="course-arrow" aria-hidden="true">↗</span>
+                </div>
+                <div class="course-card-bottom">
+                    <h2>LESSON 02</h2>
+                </div>
+            </a>
+            <a class="course-card" href="FD03/FD03-1-content.html" aria-label="FD03 열기">
+                <div class="course-card-top">
+                    <span class="course-code">Chromatics 01</span>
+                    <span class="course-arrow" aria-hidden="true">↗</span>
+                </div>
+                <div class="course-card-bottom">
+                    <h2>LESSON 03</h2>
+                </div>
+            </a>
+            <a class="course-card" href="FD04/FD04-1-content.html" aria-label="FD04 열기">
+                <div class="course-card-top">
+                    <span class="course-code">Chromatics 02</span>
+                    <span class="course-arrow" aria-hidden="true">↗</span>
+                </div>
+                <div class="course-card-bottom">
+                    <h2>LESSON 04</h2>
+                </div>
+            </a>
+            <a class="course-card" href="FD05/FD05-1-content.html" aria-label="FD05 열기">
+                <div class="course-card-top">
+                    <span class="course-code">Typographic</span>
+                    <span class="course-arrow" aria-hidden="true">↗</span>
+                </div>
+                <div class="course-card-bottom">
+                    <h2>LESSON 05</h2>
+                </div>
+            </a>
+            <a class="course-card" href="FD06/FD06-1-content.html" aria-label="FD06 열기">
+                <div class="course-card-top">
+                    <span class="course-code">Text Tool</span>
+                    <span class="course-arrow" aria-hidden="true">↗</span>
+                </div>
+                <div class="course-card-bottom">
+                    <h2>LESSON 06</h2>
+                </div>
+            </a>
+            <a class="course-card" href="FD07/FD07-1-content.html" aria-label="FD07 열기">
+                <div class="course-card-top">
+                    <span class="course-code">Image Mask Layers</span>
+                    <span class="course-arrow" aria-hidden="true">↗</span>
+                </div>
+                <div class="course-card-bottom">
+                    <h2>LESSON 07</h2>
+                </div>
+            </a>
+            <a class="course-card" href="FD08/FD08-1-content.html" aria-label="FD08 열기">
+                <div class="course-card-top">
+                    <span class="course-code">Text Mask Layers</span>
+                    <span class="course-arrow" aria-hidden="true">↗</span>
+                </div>
+                <div class="course-card-bottom">
+                    <h2>LESSON 08</h2>
+                </div>
+            </a>
+            <a class="course-card" href="FD09/FD09-1-content.html" aria-label="FD09 열기">
+                <div class="course-card-top">
+                    <span class="course-code">Graphic Effect</span>
+                    <span class="course-arrow" aria-hidden="true">↗</span>
+                </div>
+                <div class="course-card-bottom">
+                    <h2>LESSON 09</h2>
+                </div>
+            </a>
+            <a class="course-card" href="FD10/FD10-1-content.html" aria-label="FD10 열기">
+                <div class="course-card-top">
+                    <span class="course-code">Gradient</span>
+                    <span class="course-arrow" aria-hidden="true">↗</span>
+                </div>
+                <div class="course-card-bottom">
+                    <h2>LESSON 10</h2>
+                </div>
+            </a>
+            <a class="course-card" href="FD11/FD11-1-content.html" aria-label="FD11 열기">
+                <div class="course-card-top">
+                    <span class="course-code">Sketch Digitizing</span>
+                    <span class="course-arrow" aria-hidden="true">↗</span>
+                </div>
+                <div class="course-card-bottom">
+                    <h2>LESSON 11</h2>
+                </div>
+            </a>
+            <a class="course-card" href="FD12/FD12-1-content.html" aria-label="FD12 열기">
+                <div class="course-card-top">
+                    <span class="course-code">Skills Remind</span>
+                    <span class="course-arrow" aria-hidden="true">↗</span>
+                </div>
+                <div class="course-card-bottom">
+                    <h2>LESSON 12</h2>
+                </div>
+            </a>
+        </section>
+
+        <footer class="footer">
+            <span>AFFINITY UNIVERSE</span>
+            <span>FOUNDATION DESIGN</span>
+        </footer>
+    </main>
 </body>
+
 </html>

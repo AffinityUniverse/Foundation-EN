@@ -2618,6 +2618,6 @@ html body.flashcard-page {
 .flashcard-page #doorFront .card-message.voca-message,
 .flashcard-page #doorBack .card-message.voca-message,
 .flashcard-page #koreanCard .card-message.voca-message {
-  font-size: clamp(32px, calc(var(--card-size) * 0.082), 46px) !important;
+  font-size: clamp(20px, calc(var(--card-size) * 0.082), 35px) !important;
   line-height: 1.08 !important;
 }

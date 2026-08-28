@@ -2567,3 +2567,47 @@ html body.flashcard-page {
         font-size: clamp(30px, calc(var(--card-size) * .10), 42px) !important;
     }
 }
+
+
+/* ========================================
+   FINAL POLISH - 2026-08-28
+   1) Remove upper image-area tint/shadow
+   2) Korean/right card = #0D1D32
+   3) Enlarge VOCA only; keep PATTERN sizing
+======================================== */
+
+/* 1. Upper reference-image area should blend into the page background. */
+.lesson-media-frame,
+.media-shift-preview .lesson-media-frame {
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* 2. The revealed Korean/right card uses the exact requested navy. */
+.korean-card.card-face-content,
+.flashcard-page .korean-card.card-face-content,
+.flashcard-page #koreanCard {
+    background: #0D1D32 !important;
+    background-color: #0D1D32 !important;
+}
+
+/* 3. Increase VOCA center words only. PATTERN sizing above stays unchanged. */
+.card-message.voca-message,
+.flashcard-page #doorFront .card-message.voca-message,
+.flashcard-page #doorBack .card-message.voca-message,
+.flashcard-page #koreanCard .card-message.voca-message {
+    font-size: clamp(48px, calc(var(--card-size) * .125), 68px) !important;
+    line-height: 1.06 !important;
+}
+
+@media (max-width: 700px) {
+    .card-message.voca-message,
+    .flashcard-page #doorFront .card-message.voca-message,
+    .flashcard-page #doorBack .card-message.voca-message,
+    .flashcard-page #koreanCard .card-message.voca-message {
+        font-size: clamp(36px, calc(var(--card-size) * .12), 48px) !important;
+    }
+}

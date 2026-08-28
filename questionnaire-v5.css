@@ -5,42 +5,336 @@
 @font-face{font-family:'SpoqaHanSansNeo';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SpoqaHanSansNeo-Medium.woff') format('woff');font-weight:500;font-display:swap}
 @font-face{font-family:'SpoqaHanSansNeo';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SpoqaHanSansNeo-Bold.woff') format('woff');font-weight:700;font-display:swap}
 
-:root{--page-blue:#0D1D32;--point-yellow:#63B0FF;--flashcard-front-blue:#2E6FA8;--flashcard-back-blue:#153657;--flashcard-nav-blue:rgba(13,29,50,.80);--flashcard-nav-line:rgba(255,255,255,.14);--flashcard-muted-text:rgba(255,255,255,.52)}
+:root{
+  --page-blue:#0D1D32;
+  --point-yellow:#63B0FF;
+  --flashcard-front-blue:#1F83EB;
+  --flashcard-front-blue-2:#1169C5;
+  --flashcard-korean-blue:#143B62;
+  --flashcard-nav-blue:rgba(13,29,50,.82);
+  --flashcard-nav-line:rgba(255,255,255,.14);
+  --flashcard-muted-text:rgba(255,255,255,.56);
+  --card-radius:34px;
+  --animation-duration:.82s;
+  --animation-easing:cubic-bezier(.22,.72,.18,1);
+}
 
-*,*::before,*::after,button,input,select,textarea{font-family:'SpoqaHanSansNeo',Arial,sans-serif!important}
+*,*::before,*::after,button,input,select,textarea{
+  font-family:'SpoqaHanSansNeo',Arial,sans-serif!important;
+}
 
-html,body,html body,html body.flashcard-page{background-color:#0D1D32!important;background-image:radial-gradient(circle at 82% 12%,rgba(99,176,255,.27),transparent 29%),linear-gradient(145deg,#0D1D32 0%,#173C63 52%,#0D1D32 100%)!important;background-repeat:no-repeat!important;background-size:cover!important;background-position:center!important;background-attachment:fixed!important}
+html,body,html body,html body.flashcard-page{
+  background-color:#0D1D32!important;
+  background-image:
+    radial-gradient(circle at 82% 12%,rgba(99,176,255,.30),transparent 29%),
+    linear-gradient(145deg,#0D1D32 0%,#173C63 52%,#0D1D32 100%)!important;
+  background-repeat:no-repeat!important;
+  background-size:cover!important;
+  background-position:center!important;
+  background-attachment:fixed!important;
+}
 
-.card-stage,.flashcard-page .card-stage{background:#153657!important;border-radius:28px!important;box-shadow:0 22px 46px rgba(3,14,29,.35),inset 0 0 0 1px rgba(255,255,255,.10)!important}
-.door-face,.door-front{background:linear-gradient(145deg,#2E6FA8 0%,#1D4A76 100%)!important}
-.card-face-content,.door-back{background:linear-gradient(145deg,#173C63 0%,#153657 100%)!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)!important}
-.group.open .english-door{box-shadow:-18px 20px 36px rgba(3,14,29,.28),-5px 7px 14px rgba(3,14,29,.18)!important}
-.door-front::after{background:rgba(99,176,255,.08)!important}
+/* ========================================
+   FLASHCARD / 3D FLIP
+======================================== */
+.card-stage,.flashcard-page .card-stage{
+  position:relative!important;
+  background:#143B62!important;
+  border-radius:var(--card-radius)!important;
+  perspective:1800px!important;
+  perspective-origin:left center!important;
+  transform-style:preserve-3d!important;
+  -webkit-transform-style:preserve-3d!important;
+  overflow:visible!important;
+  box-shadow:
+    0 24px 52px rgba(3,14,29,.40),
+    inset 0 0 0 1px rgba(255,255,255,.11)!important;
+}
 
-.card-message{color:#fff!important;font-weight:700!important;letter-spacing:-.025em!important}
-.card-message span{color:#8BC9FF!important}
-.card-eyebrow,.card-footer{color:rgba(255,255,255,.50)!important;font-weight:400!important;letter-spacing:.10em!important}
-.flashcard-page .title{color:rgba(255,255,255,.74)!important;font-weight:500!important}
+.korean-card,
+.card-face-content,
+.english-door,
+.door-face,
+.door-front,
+.door-back{
+  border-radius:var(--card-radius)!important;
+}
 
-.flashcard-page .course-breadcrumb{gap:8px!important;padding:8px 10px!important;border:1px solid rgba(255,255,255,.14)!important;border-radius:14px!important;background:rgba(13,29,50,.78)!important;box-shadow:0 12px 30px rgba(3,14,29,.20)!important;backdrop-filter:blur(14px)!important;-webkit-backdrop-filter:blur(14px)!important}
-.flashcard-page .course-breadcrumb a,.flashcard-page .breadcrumb-current{min-height:34px!important;height:34px!important;padding:0 12px!important;border:1px solid rgba(255,255,255,.12)!important;border-radius:10px!important;color:rgba(255,255,255,.82)!important;background:rgba(255,255,255,.055)!important;font-size:11px!important;font-weight:500!important;letter-spacing:0!important;transform:none!important}
-.flashcard-page .course-breadcrumb a:hover,.flashcard-page .course-breadcrumb a:focus-visible,.flashcard-page .breadcrumb-current:hover,.flashcard-page .breadcrumb-current:focus-visible{border-color:rgba(99,176,255,.36)!important;background:rgba(99,176,255,.10)!important}
-.flashcard-page .breadcrumb-separator,.flashcard-page .lesson-switcher-arrow{color:rgba(255,255,255,.34)!important}
+.english-door{
+  position:absolute!important;
+  inset:0!important;
+  z-index:2!important;
+  transform:rotateY(0deg) translateZ(1px)!important;
+  transform-origin:left center!important;
+  transform-style:preserve-3d!important;
+  -webkit-transform-style:preserve-3d!important;
+  transition:
+    transform var(--animation-duration) var(--animation-easing),
+    box-shadow var(--animation-duration) var(--animation-easing)!important;
+  will-change:transform!important;
+}
 
-.mini-toc,.flashcard-page .mini-toc.horizontal-toc,.flashcard-page .lesson-dropdown{border:1px solid rgba(255,255,255,.14)!important;background:rgba(13,29,50,.80)!important;box-shadow:0 12px 30px rgba(3,14,29,.22)!important;backdrop-filter:blur(14px)!important;-webkit-backdrop-filter:blur(14px)!important}
-.flashcard-page .mini-toc.horizontal-toc{border-radius:16px!important}
-.toc-title,.flashcard-page .horizontal-toc .toc-title{color:rgba(255,255,255,.46)!important;font-weight:500!important}
-.mini-toc a,.flashcard-page .horizontal-toc a,.flashcard-page .lesson-dropdown a,.flashcard-page .card-navigation button,.flashcard-page .card-navigation .nav-button{border:1px solid rgba(255,255,255,.12)!important;color:rgba(255,255,255,.78)!important;background:rgba(255,255,255,.055)!important;font-weight:500!important;box-shadow:none!important}
-.mini-toc a:hover,.mini-toc a:focus-visible,.flashcard-page .horizontal-toc a:hover,.flashcard-page .horizontal-toc a:focus-visible,.flashcard-page .lesson-dropdown a:hover,.flashcard-page .lesson-dropdown a:focus-visible{color:#fff!important;border-color:rgba(99,176,255,.34)!important;background:rgba(99,176,255,.12)!important}
-.mini-toc a.active,.flashcard-page .horizontal-toc a.active{color:#0D1D32!important;border-color:#63B0FF!important;background:#63B0FF!important;font-weight:700!important}
-.flashcard-page .lesson-number{color:#0D1D32!important;background:#79BDFF!important;font-weight:700!important}
-.flashcard-page .lesson-dropdown{border-radius:16px!important}
-.flashcard-page .lesson-dropdown a{border-radius:10px!important}
+.door-face,
+.door-front,
+.door-back{
+  background:linear-gradient(145deg,var(--flashcard-front-blue) 0%,var(--flashcard-front-blue-2) 100%)!important;
+  backface-visibility:hidden!important;
+  -webkit-backface-visibility:hidden!important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)!important;
+}
 
-.lesson-media-frame{border-color:rgba(255,255,255,.12)!important;background:rgba(13,29,50,.30)!important;box-shadow:0 18px 42px rgba(3,14,29,.20)!important}
-.media-arrow{border-color:rgba(255,255,255,.14)!important;color:#fff!important;background:rgba(13,29,50,.78)!important}
-.media-arrow:hover,.media-arrow:focus-visible{border-color:rgba(99,176,255,.34)!important;background:rgba(99,176,255,.14)!important}
-.media-pagination button,.media-pagination .dot{background:rgba(255,255,255,.22)!important}
-.media-pagination button.active,.media-pagination .dot.active{background:#63B0FF!important}
+.door-front{
+  transform:rotateY(0deg) translateZ(.7px)!important;
+}
 
-@media(max-width:700px){.flashcard-page .course-breadcrumb{padding:7px 9px!important}.flashcard-page .course-breadcrumb a,.flashcard-page .breadcrumb-current{min-height:30px!important;height:30px!important;padding:0 9px!important;font-size:9px!important}}
+.door-back{
+  transform:rotateY(180deg) translateZ(.7px)!important;
+}
+
+/* 국문 카드만 별도의 더 짙은 색 */
+.korean-card.card-face-content{
+  background:linear-gradient(145deg,#17466F 0%,var(--flashcard-korean-blue) 100%)!important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)!important;
+}
+
+.group{
+  transform-style:preserve-3d!important;
+  -webkit-transform-style:preserve-3d!important;
+  transition:transform var(--animation-duration) var(--animation-easing)!important;
+}
+
+.group.open .english-door{
+  transform:rotateY(-180deg) translateZ(1px)!important;
+  box-shadow:
+    -26px 24px 48px rgba(3,14,29,.34),
+    -7px 8px 18px rgba(3,14,29,.20)!important;
+}
+
+.door-front::after{
+  background:rgba(116,194,255,.12)!important;
+}
+
+/* ========================================
+   CARD TYPOGRAPHY
+======================================== */
+.card-message{
+  color:#fff!important;
+  font-weight:700!important;
+  letter-spacing:-.025em!important;
+}
+
+.card-message span{
+  color:#A8D8FF!important;
+}
+
+/* VOCA 단어는 크게, PATTERN 문장은 기존 크기 유지 */
+.card-message.voca-message{
+  font-size:clamp(38px,calc(var(--card-size) * .098),54px)!important;
+  font-weight:700!important;
+  line-height:1.08!important;
+  letter-spacing:-.035em!important;
+}
+
+.card-message.pattern-message{
+  font-size:clamp(18px,calc(var(--card-size) * .052),27px)!important;
+  line-height:1.22!important;
+}
+
+/* VOCA 카드의 보조 글자만 소폭 확대 */
+.door-face:has(.voca-message) .card-eyebrow,
+.door-face:has(.voca-message) .card-footer,
+.korean-card:has(.voca-message) .card-eyebrow,
+.korean-card:has(.voca-message) .card-footer{
+  font-size:clamp(10px,calc(var(--card-size) * .026),13px)!important;
+}
+
+.card-eyebrow,.card-footer{
+  color:rgba(255,255,255,.56)!important;
+  font-weight:400!important;
+  letter-spacing:.10em!important;
+}
+
+.flashcard-page .title{
+  color:rgba(255,255,255,.74)!important;
+  font-weight:500!important;
+}
+
+/* ========================================
+   TOP BREADCRUMB / CLICK-ONLY DROPDOWN
+======================================== */
+.flashcard-page .course-breadcrumb{
+  gap:8px!important;
+  padding:8px 10px!important;
+  border:1px solid rgba(255,255,255,.14)!important;
+  border-radius:14px!important;
+  background:rgba(13,29,50,.82)!important;
+  box-shadow:0 12px 30px rgba(3,14,29,.20)!important;
+  backdrop-filter:blur(14px)!important;
+  -webkit-backdrop-filter:blur(14px)!important;
+}
+
+.flashcard-page .course-breadcrumb a,
+.flashcard-page .breadcrumb-current{
+  min-height:34px!important;
+  height:34px!important;
+  padding:0 12px!important;
+  border:1px solid rgba(255,255,255,.12)!important;
+  border-radius:10px!important;
+  color:rgba(255,255,255,.84)!important;
+  background:rgba(255,255,255,.055)!important;
+  font-size:11px!important;
+  font-weight:500!important;
+  letter-spacing:0!important;
+  transform:none!important;
+}
+
+.flashcard-page .course-breadcrumb a:hover,
+.flashcard-page .course-breadcrumb a:focus-visible,
+.flashcard-page .breadcrumb-current:hover,
+.flashcard-page .breadcrumb-current:focus-visible{
+  border-color:rgba(99,176,255,.38)!important;
+  background:rgba(99,176,255,.11)!important;
+}
+
+.flashcard-page .breadcrumb-separator,
+.flashcard-page .lesson-switcher-arrow{
+  color:rgba(255,255,255,.36)!important;
+}
+
+/* 기존 항상-open 규칙을 무효화 */
+.flashcard-page .lesson-switcher .lesson-dropdown{
+  opacity:0!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+  transform:translateY(-7px)!important;
+  transition:
+    opacity .18s ease,
+    visibility .18s ease,
+    transform .18s ease!important;
+}
+
+/* 마우스 hover로는 열지 않고, 버튼을 클릭/포커스했을 때만 열림 */
+.flashcard-page .lesson-switcher:focus-within .lesson-dropdown{
+  opacity:1!important;
+  visibility:visible!important;
+  pointer-events:auto!important;
+  transform:translateY(0)!important;
+}
+
+.flashcard-page .lesson-switcher:focus-within .lesson-switcher-arrow{
+  transform:rotate(180deg)!important;
+}
+
+/* ========================================
+   NAVIGATION
+======================================== */
+.mini-toc,
+.flashcard-page .mini-toc.horizontal-toc,
+.flashcard-page .lesson-dropdown{
+  border:1px solid rgba(255,255,255,.14)!important;
+  background:rgba(13,29,50,.82)!important;
+  box-shadow:0 12px 30px rgba(3,14,29,.22)!important;
+  backdrop-filter:blur(14px)!important;
+  -webkit-backdrop-filter:blur(14px)!important;
+}
+
+.flashcard-page .mini-toc.horizontal-toc{
+  border-radius:16px!important;
+}
+
+.toc-title,
+.flashcard-page .horizontal-toc .toc-title{
+  color:rgba(255,255,255,.48)!important;
+  font-weight:500!important;
+}
+
+.mini-toc a,
+.flashcard-page .horizontal-toc a,
+.flashcard-page .lesson-dropdown a,
+.flashcard-page .card-navigation button,
+.flashcard-page .card-navigation .nav-button{
+  border:1px solid rgba(255,255,255,.12)!important;
+  color:rgba(255,255,255,.80)!important;
+  background:rgba(255,255,255,.06)!important;
+  font-weight:500!important;
+  box-shadow:none!important;
+}
+
+.mini-toc a:hover,
+.mini-toc a:focus-visible,
+.flashcard-page .horizontal-toc a:hover,
+.flashcard-page .horizontal-toc a:focus-visible,
+.flashcard-page .lesson-dropdown a:hover,
+.flashcard-page .lesson-dropdown a:focus-visible{
+  color:#fff!important;
+  border-color:rgba(99,176,255,.38)!important;
+  background:rgba(99,176,255,.13)!important;
+}
+
+.mini-toc a.active,
+.flashcard-page .horizontal-toc a.active{
+  color:#0D1D32!important;
+  border-color:#6BB9FF!important;
+  background:#6BB9FF!important;
+  font-weight:700!important;
+}
+
+.flashcard-page .lesson-number{
+  color:#0D1D32!important;
+  background:#79C3FF!important;
+  font-weight:700!important;
+}
+
+.flashcard-page .lesson-dropdown{
+  border-radius:16px!important;
+}
+
+.flashcard-page .lesson-dropdown a{
+  border-radius:10px!important;
+}
+
+/* ========================================
+   REFERENCE IMAGE PANEL
+======================================== */
+.lesson-media-frame{
+  border-color:rgba(255,255,255,.12)!important;
+  background:rgba(13,29,50,.30)!important;
+  box-shadow:0 18px 42px rgba(3,14,29,.20)!important;
+}
+
+.media-arrow{
+  border-color:rgba(255,255,255,.14)!important;
+  color:#fff!important;
+  background:rgba(13,29,50,.78)!important;
+}
+
+.media-arrow:hover,
+.media-arrow:focus-visible{
+  border-color:rgba(99,176,255,.36)!important;
+  background:rgba(99,176,255,.15)!important;
+}
+
+.media-pagination button,
+.media-pagination .dot{
+  background:rgba(255,255,255,.22)!important;
+}
+
+.media-pagination button.active,
+.media-pagination .dot.active{
+  background:#63B0FF!important;
+}
+
+@media(max-width:700px){
+  :root{--card-radius:26px}
+  .flashcard-page .course-breadcrumb{padding:7px 9px!important}
+  .flashcard-page .course-breadcrumb a,
+  .flashcard-page .breadcrumb-current{
+    min-height:30px!important;
+    height:30px!important;
+    padding:0 9px!important;
+    font-size:9px!important;
+  }
+  .card-message.voca-message{
+    font-size:clamp(30px,calc(var(--card-size) * .10),42px)!important;
+  }
+}

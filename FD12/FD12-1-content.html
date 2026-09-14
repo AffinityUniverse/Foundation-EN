@@ -1,12 +1,21 @@
 <!DOCTYPE html>
 
-<html lang="ko">
+<html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/><base target="_top"/>
 <title>Gradient</title>
 <link href="../questionnaire-v5.css?v=20260915-fix2" rel="stylesheet"/>
 <script defer="" src="../flashcard-decks.js?v=20260915-fix2"></script>
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+  const deck = window.FLASHCARD_DECKS?.['fd12-1'];
+  if (!deck) return;
+  deck.title = 'Gradient';
+  deck.highlight = '';
+  deck.cards?.forEach(card => { card.eyebrow = `GRADIENT - ${card.section}`; });
+});
+</script>
 <script defer="" src="../flashcard.js?v=20260915-fix2"></script>
 </head>
 <body class="flashcard-page media-shift-preview" data-deck="fd12-1" data-image-count="16" data-image-cover="cover.png" data-image-ext="png" data-image-folder="./images"><nav aria-label="Current learning path" class="course-breadcrumb">

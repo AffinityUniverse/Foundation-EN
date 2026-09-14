@@ -5,7 +5,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/><base target="_top"/>
 <title>Gradient</title>
-<link href="../questionnaire-v5.css?v=20260915-navfix2" rel="stylesheet"/>
+<link href="../questionnaire-v5.css?v=20260915-navfix3" rel="stylesheet"/>
 <style>
 body.flashcard-page .mini-toc.horizontal-toc{
     flex-direction:column!important;
@@ -20,8 +20,8 @@ body.flashcard-page .mini-toc.horizontal-toc{
 }
 body.flashcard-page .horizontal-toc .toc-group{
     display:grid!important;
-    grid-template-columns:48px repeat(12,34px)!important;
     grid-auto-rows:31px!important;
+    grid-auto-flow:row!important;
     align-items:center!important;
     justify-content:start!important;
     width:max-content!important;
@@ -30,30 +30,22 @@ body.flashcard-page .horizontal-toc .toc-group{
     overflow:visible!important;
     padding:0 2px!important;
 }
+body.flashcard-page .horizontal-toc .toc-group:first-child{
+    grid-template-columns:48px repeat(13,34px)!important;
+}
+body.flashcard-page .horizontal-toc .toc-group:last-child{
+    grid-template-columns:48px repeat(17,34px)!important;
+}
 body.flashcard-page .horizontal-toc .toc-title{
     grid-column:1!important;
-    grid-row:1!important;
+    grid-row:1 / span 2!important;
+    align-self:center!important;
     margin:0!important;
     text-align:left!important;
 }
-body.flashcard-page .horizontal-toc .toc-group a:nth-of-type(n+13){
-    grid-row:2!important;
-}
-body.flashcard-page .horizontal-toc .toc-group a:nth-of-type(13){grid-column:1!important}
-body.flashcard-page .horizontal-toc .toc-group a:nth-of-type(14){grid-column:2!important}
-body.flashcard-page .horizontal-toc .toc-group a:nth-of-type(15){grid-column:3!important}
-body.flashcard-page .horizontal-toc .toc-group a:nth-of-type(16){grid-column:4!important}
-body.flashcard-page .horizontal-toc .toc-group a:nth-of-type(17){grid-column:5!important}
-body.flashcard-page .horizontal-toc .toc-group a:nth-of-type(18){grid-column:6!important}
-body.flashcard-page .horizontal-toc .toc-group a:nth-of-type(19){grid-column:7!important}
-body.flashcard-page .horizontal-toc .toc-group a:nth-of-type(20){grid-column:8!important}
-body.flashcard-page .horizontal-toc .toc-group a:nth-of-type(21){grid-column:9!important}
-body.flashcard-page .horizontal-toc .toc-group a:nth-of-type(22){grid-column:10!important}
-body.flashcard-page .horizontal-toc .toc-group a:nth-of-type(23){grid-column:11!important}
-body.flashcard-page .horizontal-toc .toc-group a:nth-of-type(24){grid-column:12!important}
 body.flashcard-page .horizontal-toc .toc-divider{display:none!important}
 </style>
-<script src="../flashcard-decks.js?v=20260915-navfix2"></script>
+<script src="../flashcard-decks.js?v=20260915-navfix3"></script>
 <script>
 (() => {
     const deck = window.FLASHCARD_DECKS?.['fd12-1'];
@@ -65,7 +57,7 @@ body.flashcard-page .horizontal-toc .toc-divider{display:none!important}
     });
 })();
 </script>
-<script defer="" src="../flashcard.js?v=20260915-navfix2"></script>
+<script defer="" src="../flashcard.js?v=20260915-navfix3"></script>
 </head>
 <body class="flashcard-page media-shift-preview" data-deck="fd12-1" data-image-count="16" data-image-cover="cover.png" data-image-ext="png" data-image-folder="./images"><nav aria-label="Current learning path" class="course-breadcrumb">
 <a href="../index.html">Foundation</a>

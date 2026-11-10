@@ -878,6 +878,15 @@
                 ) || 0
             );
 
+        const referenceImageStart =
+            Math.max(
+                1,
+                Number.parseInt(
+                    document.body.dataset.imageStart || "1",
+                    10
+                ) || 1
+            );
+
         const referenceCoverImage =
             String(
                 document.body.dataset.imageCover || ""
@@ -892,7 +901,19 @@
                 document.body.dataset.imageExt || "png"
             ).replace(/^\./, "");
 
-        let currentReferenceImageIndex = 0;
+        // Optional initial slide for each subchapter (zero-based, including cover).
+        // All slides remain available via the existing previous/next arrows.
+        const referenceInitialImageIndex =
+            Number.parseInt(
+                document.body.dataset.imageInitialIndex || "0",
+                10
+            ) || 0;
+
+        let currentReferenceImageIndex =
+            Math.min(
+                Math.max(0, referenceInitialImageIndex),
+                Math.max(0, referenceSlideCount - 1)
+            );
 
         function renderReferencePagination() {
             const hasMultipleImages =
@@ -980,8 +1001,9 @@
                 Boolean(referenceCoverImage);
 
             const imageNumber =
-                currentReferenceImageIndex +
-                (hasCover ? 0 : 1);
+                referenceImageStart +
+                currentReferenceImageIndex -
+                (hasCover ? 1 : 0);
 
             const imageFileName =
                 hasCover && currentReferenceImageIndex === 0

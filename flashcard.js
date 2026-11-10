@@ -187,7 +187,7 @@
             }
 
             const minimumSize =
-                Math.min(16, preferredSize);
+                Math.min(14, preferredSize);
 
             const fitsAt = size => {
                 message.style.setProperty(
@@ -228,8 +228,11 @@
                 }
             }
 
-            message.style.fontSize =
-                `${Math.floor(best * 10) / 10}px`;
+            message.style.setProperty(
+                "font-size",
+                `${Math.floor(best * 10) / 10}px`,
+                "important"
+            );
         }
 
         function fitCardMessages() {
